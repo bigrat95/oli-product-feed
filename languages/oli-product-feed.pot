@@ -1,0 +1,1871 @@
+# Copyright (C) 2026 Olivier Bigras
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Oli Product Feed 0.3.4\n"
+"Report-Msgid-Bugs-To: https://github.com/bigrat95/oli-product-feed/issues\n"
+"Last-Translator: Olivier Bigras <oli@olivierbigras.com>\n"
+"Language-Team: Olivier Bigras <oli@olivierbigras.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-06T07:48:18+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: oli-product-feed\n"
+
+#. Plugin Name of the plugin
+#: oli-product-feed.php
+msgid "Oli Product Feed"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: oli-product-feed.php
+msgid "https://github.com/bigrat95/oli-product-feed"
+msgstr ""
+
+#. Description of the plugin
+#: oli-product-feed.php
+msgid "Product feeds for WooCommerce: Google Merchant Center, Pinterest, Meta (Facebook, Instagram), TikTok, Microsoft (Bing) and generic CSV/XML. One feed per language and currency, TranslatePress support, background generation and WP-CLI."
+msgstr ""
+
+#. Author of the plugin
+#: oli-product-feed.php
+msgid "Olivier Bigras"
+msgstr ""
+
+#. Author URI of the plugin
+#: oli-product-feed.php
+msgid "https://olivierbigras.com"
+msgstr ""
+
+#: src/Admin/Admin.php:80
+#: src/Admin/Admin.php:184
+msgid "Feeds"
+msgstr ""
+
+#: src/Admin/Admin.php:90
+#: src/Admin/Admin.php:91
+#: src/Admin/Admin.php:361
+msgid "Product Feeds"
+msgstr ""
+
+#: src/Admin/Admin.php:119
+#: src/Admin/Admin.php:338
+msgid "Copy"
+msgstr ""
+
+#: src/Admin/Admin.php:120
+msgid "Copied"
+msgstr ""
+
+#: src/Admin/Admin.php:121
+msgid "Feed URL copied to clipboard."
+msgstr ""
+
+#: src/Admin/Admin.php:122
+msgid "Press Ctrl+C (Cmd+C on a Mac) to copy the selected URL."
+msgstr ""
+
+#: src/Admin/Admin.php:123
+msgid "Feed generated."
+msgstr ""
+
+#: src/Admin/Admin.php:124
+msgid "Feed generation failed."
+msgstr ""
+
+#: src/Admin/Admin.php:125
+msgid "Use lowercase letters, digits and underscores."
+msgstr ""
+
+#: src/Admin/Admin.php:126
+msgid "This attribute is already in the list."
+msgstr ""
+
+#: src/Admin/Admin.php:127
+msgid "Counting…"
+msgstr ""
+
+#: src/Admin/Admin.php:128
+msgid "The count failed."
+msgstr ""
+
+#: src/Admin/Admin.php:172
+#: src/Admin/Admin.php:367
+#: src/Admin/Editor.php:101
+msgid "Add New Feed"
+msgstr ""
+
+#: src/Admin/Admin.php:183
+msgid "Secondary menu"
+msgstr ""
+
+#: src/Admin/Admin.php:184
+msgid "Settings"
+msgstr ""
+
+#: src/Admin/Admin.php:197
+msgid "Feed saved."
+msgstr ""
+
+#: src/Admin/Admin.php:198
+msgid "Feed saved. Generation started in the background."
+msgstr ""
+
+#: src/Admin/Admin.php:199
+msgid "Feed deleted."
+msgstr ""
+
+#: src/Admin/Admin.php:200
+msgid "Feed duplicated (inactive). Review it, then generate it."
+msgstr ""
+
+#: src/Admin/Admin.php:201
+msgid "Generation started in the background."
+msgstr ""
+
+#: src/Admin/Admin.php:202
+#: src/Generator.php:45
+msgid "A generation is already running for this feed."
+msgstr ""
+
+#: src/Admin/Admin.php:203
+msgid "The action failed."
+msgstr ""
+
+#: src/Admin/Admin.php:204
+msgid "Settings saved."
+msgstr ""
+
+#: src/Admin/Admin.php:205
+msgid "Generation of every active feed started in the background."
+msgstr ""
+
+#: src/Admin/Admin.php:213
+msgid "Settings saved, but the output folder was not changed."
+msgstr ""
+
+#. translators: %s: folder, e.g. "oli-product-feed".
+#: src/Admin/Admin.php:215
+#: src/Cli.php:228
+#, php-format
+msgid "The feeds stay in wp-content/uploads/%s."
+msgstr ""
+
+#. translators: %s: folder, e.g. "oli-product-feed".
+#: src/Admin/Admin.php:223
+#, php-format
+msgid "Nothing was moved or deleted: the feeds are still generated and served from wp-content/uploads/%s. Fix the folder or choose another one in the settings (or in the oliprfe_output_dir filter)."
+msgstr ""
+
+#: src/Admin/Admin.php:225
+msgid "The feeds cannot be generated until the folder is fixed or another one is chosen in the settings (or in the oliprfe_output_dir filter)."
+msgstr ""
+
+#. translators: 1: file name, 2: output folder, 3: previous folder.
+#: src/Admin/Admin.php:235
+#, php-format
+msgid "The feed file %1$s was not moved to wp-content/uploads/%2$s: a file of the same name that the plugin did not write is there. That file is left untouched, and the feed is still served from wp-content/uploads/%3$s (not regenerated). Remove or rename that file, or change the file name of the feed, then generate the feed."
+msgstr ""
+
+#. translators: %s: delay, e.g. "3 hours".
+#: src/Admin/Admin.php:248
+#, php-format
+msgid "Scheduled generation is %s late: WP-Cron does not seem to run on this site (DISABLE_WP_CRON without a server cron). Ask your host for a server cron that calls wp-cron.php, or run \"wp oli-feed run-due\" from a system cron."
+msgstr ""
+
+#: src/Admin/Admin.php:254
+msgid "No multilingual plugin detected: feeds use the site language. With TranslatePress, you can create one feed per language."
+msgstr ""
+
+#: src/Admin/Admin.php:267
+msgid "Generating"
+msgstr ""
+
+#: src/Admin/Admin.php:269
+#: src/Admin/Editor.php:346
+msgid "Error"
+msgstr ""
+
+#: src/Admin/Admin.php:271
+msgid "Inactive"
+msgstr ""
+
+#: src/Admin/Admin.php:273
+msgid "Never generated"
+msgstr ""
+
+#: src/Admin/Admin.php:275
+#: src/Admin/Editor.php:691
+#: src/Admin/Editor.php:703
+msgid "Active"
+msgstr ""
+
+#: src/Admin/Admin.php:309
+msgid "Generation progress"
+msgstr ""
+
+#. translators: 1: processed products, 2: total products, 3: percentage.
+#: src/Admin/Admin.php:325
+#, php-format
+msgid "%1$s of %2$s products (%3$s%%)"
+msgstr ""
+
+#: src/Admin/Admin.php:340
+msgid "Generate the feed to publish its URL."
+msgstr ""
+
+#: src/Admin/Admin.php:347
+msgid "(opens in a new tab)"
+msgstr ""
+
+#: src/Admin/Admin.php:348
+#: src/Admin/Admin.php:351
+#: src/Admin/ListTable.php:53
+msgid "Feed URL"
+msgstr ""
+
+#: src/Admin/Admin.php:365
+msgid "Create your first product feed"
+msgstr ""
+
+#: src/Admin/Admin.php:366
+msgid "One feed per platform, language and currency. The file is regenerated in the background and its URL never changes."
+msgstr ""
+
+#: src/Admin/Admin.php:376
+msgid "Search feeds"
+msgstr ""
+
+#: src/Admin/Admin.php:396
+msgid "Product Feeds Settings"
+msgstr ""
+
+#: src/Admin/Admin.php:401
+msgid "Feed files"
+msgstr ""
+
+#: src/Admin/Admin.php:402
+msgid "Output folder"
+msgstr ""
+
+#: src/Admin/Admin.php:403
+msgid "Folder inside uploads, created when a feed is generated. Changing it changes every feed URL: the feed files move to the new folder, and the previous folder is removed when the plugin created it and nothing else is in it. A folder that cannot be used (symbolic link, outside uploads, not writable) is refused, and nothing is moved. The oliprfe_output_dir filter can also set it."
+msgstr ""
+
+#. translators: 1: number of files, 2: total size.
+#: src/Admin/Admin.php:407
+#, php-format
+msgid "Currently %1$s files, %2$s."
+msgstr ""
+
+#: src/Admin/Admin.php:412
+msgid "Serve feeds"
+msgstr ""
+
+#: src/Admin/Admin.php:413
+msgid "Static file (fastest; the host or CDN decides the cache headers)"
+msgstr ""
+
+#: src/Admin/Admin.php:414
+msgid "Through WordPress (?oliprfe_feed=<file>): short cache, noindex, ETag and Last-Modified on any host"
+msgstr ""
+
+#: src/Admin/Admin.php:415
+msgid "Use WordPress serving when a CDN caches static files for a long time (stale feeds). The feed URLs change: update them in the platforms."
+msgstr ""
+
+#: src/Admin/Admin.php:416
+msgid "Cache lifetime"
+msgstr ""
+
+#: src/Admin/Admin.php:416
+msgid "seconds (WordPress serving only; at most half of the regeneration interval of the feed; 0: no-cache)"
+msgstr ""
+
+#: src/Admin/Admin.php:418
+msgid "Generation"
+msgstr ""
+
+#: src/Admin/Admin.php:419
+msgid "Product changes"
+msgstr ""
+
+#: src/Admin/Admin.php:419
+msgid "Regenerate the active feeds when a product is updated (at most every 15 minutes)"
+msgstr ""
+
+#: src/Admin/Admin.php:420
+msgid "Log"
+msgstr ""
+
+#: src/Admin/Admin.php:421
+msgid "Off"
+msgstr ""
+
+#: src/Admin/Admin.php:421
+msgid "Errors only"
+msgstr ""
+
+#: src/Admin/Admin.php:421
+msgid "Errors and every generation"
+msgstr ""
+
+#: src/Admin/Admin.php:424
+msgid "Written to WooCommerce > Status > Logs (source: oli-product-feed)."
+msgstr ""
+
+#: src/Admin/Admin.php:426
+msgid "Schedule check"
+msgstr ""
+
+#. translators: %s: date and time.
+#: src/Admin/Admin.php:429
+#, php-format
+msgid "Next check of the due feeds: %s (every 15 minutes)."
+msgstr ""
+
+#: src/Admin/Admin.php:431
+msgid "Not scheduled yet: it is scheduled on the next page load."
+msgstr ""
+
+#: src/Admin/Admin.php:434
+msgid "Access"
+msgstr ""
+
+#: src/Admin/Admin.php:434
+msgid "Shop managers"
+msgstr ""
+
+#: src/Admin/Admin.php:435
+msgid "Shop managers can manage the feeds (otherwise administrators only)"
+msgstr ""
+
+#: src/Admin/Admin.php:436
+msgid "Checked: users with the manage_woocommerce capability (administrators and shop managers). Unchecked: users with the manage_options capability (administrators)."
+msgstr ""
+
+#: src/Admin/Admin.php:438
+msgid "Uninstall"
+msgstr ""
+
+#: src/Admin/Admin.php:438
+msgid "Plugin data"
+msgstr ""
+
+#: src/Admin/Admin.php:439
+msgid "Delete all data when the plugin is deleted (feeds, settings and generated files)"
+msgstr ""
+
+#: src/Admin/Admin.php:440
+msgid "Checked: the feeds, the settings, the generated files of every output folder the plugin used and its WooCommerce logs are deleted; files the plugin did not write are never touched. Unchecked: everything is kept."
+msgstr ""
+
+#: src/Admin/Admin.php:444
+msgid "Maintenance"
+msgstr ""
+
+#: src/Admin/Admin.php:446
+msgid "Regenerates every active feed in the background. The current files stay online until the new ones replace them."
+msgstr ""
+
+#: src/Admin/Admin.php:447
+msgid "Regenerate all active feeds"
+msgstr ""
+
+#: src/Admin/Admin.php:482
+msgid "You are not allowed to do this."
+msgstr ""
+
+#. translators: %s: feed name.
+#: src/Admin/Admin.php:557
+#, php-format
+msgid "%s (copy)"
+msgstr ""
+
+#. translators: 1: items, 2: products, 3: variations.
+#: src/Admin/Admin.php:649
+#, php-format
+msgid "%1$s items match these filters (%2$s products and %3$s variations)."
+msgstr ""
+
+#: src/Admin/Editor.php:41
+msgid "Parent product (variations)"
+msgstr ""
+
+#: src/Admin/Editor.php:42
+msgid "Product name in the feed language (or the title template)"
+msgstr ""
+
+#: src/Admin/Editor.php:43
+msgid "Description in the feed language, plain text"
+msgstr ""
+
+#: src/Admin/Editor.php:44
+msgid "Product URL in the feed language"
+msgstr ""
+
+#: src/Admin/Editor.php:45
+msgid "Main image (variation image first)"
+msgstr ""
+
+#: src/Admin/Editor.php:46
+msgid "Gallery images"
+msgstr ""
+
+#: src/Admin/Editor.php:47
+msgid "Stock status and availability rules"
+msgstr ""
+
+#: src/Admin/Editor.php:48
+msgid "Regular price and currency (price source)"
+msgstr ""
+
+#: src/Admin/Editor.php:49
+msgid "Sale price when lower than the regular price"
+msgstr ""
+
+#: src/Admin/Editor.php:50
+msgid "Sale dates, when set"
+msgstr ""
+
+#: src/Admin/Editor.php:51
+msgid "new"
+msgstr ""
+
+#: src/Admin/Editor.php:52
+msgid "Google category of the product category (see below)"
+msgstr ""
+
+#: src/Admin/Editor.php:53
+msgid "Category path in the feed language"
+msgstr ""
+
+#: src/Admin/Editor.php:54
+msgid "\"no\" when there is no GTIN or MPN"
+msgstr ""
+
+#: src/Admin/Editor.php:55
+msgid "Attribute pa_color (or pa_colour, Color, Colour), variation value first, one value only"
+msgstr ""
+
+#: src/Admin/Editor.php:56
+msgid "Attribute pa_size (or Size), variation value first, one value only"
+msgstr ""
+
+#: src/Admin/Editor.php:67
+msgid "Automatic"
+msgstr ""
+
+#: src/Admin/Editor.php:68
+#: src/Admin/Editor.php:791
+msgid "Product field"
+msgstr ""
+
+#: src/Admin/Editor.php:69
+msgid "Product attribute"
+msgstr ""
+
+#: src/Admin/Editor.php:70
+#: src/Admin/Editor.php:793
+msgid "Taxonomy"
+msgstr ""
+
+#: src/Admin/Editor.php:71
+msgid "Custom field (meta key)"
+msgstr ""
+
+#: src/Admin/Editor.php:72
+#: src/Admin/Editor.php:796
+msgid "Static value"
+msgstr ""
+
+#: src/Admin/Editor.php:73
+msgid "Copy of another feed attribute (final value)"
+msgstr ""
+
+#: src/Admin/Editor.php:74
+msgid "Do not send"
+msgstr ""
+
+#: src/Admin/Editor.php:101
+msgid "Edit Feed"
+msgstr ""
+
+#: src/Admin/Editor.php:108
+msgid "The feed was not saved. Fix the following:"
+msgstr ""
+
+#: src/Admin/Editor.php:121
+#: src/Admin/Editor.php:122
+msgid "Feed name"
+msgstr ""
+
+#: src/Admin/Editor.php:138
+#: src/Admin/Editor.php:315
+msgid "Save feed"
+msgstr ""
+
+#: src/Admin/Editor.php:270
+msgid "Feed"
+msgstr ""
+
+#: src/Admin/Editor.php:272
+msgid "Active (generated on schedule)"
+msgstr ""
+
+#: src/Admin/Editor.php:275
+msgid "Status:"
+msgstr ""
+
+#. translators: %s: date and time.
+#: src/Admin/Editor.php:282
+#, php-format
+msgid "Last generated: %s"
+msgstr ""
+
+#. translators: %s: date and time.
+#: src/Admin/Editor.php:291
+#, php-format
+msgid "Next generation: %s"
+msgstr ""
+
+#: src/Admin/Editor.php:293
+msgid "Next generation: manual"
+msgstr ""
+
+#. translators: 1: items in the feed, 2: excluded products.
+#: src/Admin/Editor.php:299
+#, php-format
+msgid "Items: %1$s (excluded: %2$s)"
+msgstr ""
+
+#: src/Admin/Editor.php:305
+msgid "Feed URL:"
+msgstr ""
+
+#: src/Admin/Editor.php:312
+#: src/Admin/ListTable.php:184
+msgid "Delete this feed and its file?"
+msgstr ""
+
+#: src/Admin/Editor.php:312
+msgid "Delete feed"
+msgstr ""
+
+#: src/Admin/Editor.php:314
+msgid "Save and generate now"
+msgstr ""
+
+#: src/Admin/Editor.php:320
+msgid "Submit this feed"
+msgstr ""
+
+#: src/Admin/Editor.php:321
+msgid "Use the same frequency (or less) on the platform as the regeneration of the feed."
+msgstr ""
+
+#: src/Admin/Editor.php:327
+msgid "Last runs"
+msgstr ""
+
+#. translators: 1: items, 2: seconds.
+#: src/Admin/Editor.php:334
+#, php-format
+msgid "%1$s items in %2$s s"
+msgstr ""
+
+#: src/Admin/Editor.php:363
+msgid "Invalid product"
+msgstr ""
+
+#: src/Admin/Editor.php:364
+msgid "Parent not published"
+msgstr ""
+
+#: src/Admin/Editor.php:365
+msgid "Password protected"
+msgstr ""
+
+#: src/Admin/Editor.php:366
+msgid "Stock status filtered"
+msgstr ""
+
+#: src/Admin/Editor.php:367
+msgid "Title filter"
+msgstr ""
+
+#: src/Admin/Editor.php:368
+msgid "Excluded by a filter"
+msgstr ""
+
+#: src/Admin/Editor.php:369
+msgid "No price"
+msgstr ""
+
+#: src/Admin/Editor.php:370
+msgid "Outside the price range"
+msgstr ""
+
+#: src/Admin/Editor.php:371
+msgid "Invalid GTIN (not sent)"
+msgstr ""
+
+#: src/Admin/Editor.php:372
+msgid "No brand"
+msgstr ""
+
+#. translators: %s: field names.
+#: src/Admin/Editor.php:379
+#, php-format
+msgid "Missing required field: %s"
+msgstr ""
+
+#. translators: %s: meta key.
+#: src/Admin/Editor.php:383
+#, php-format
+msgid "Exclusion rule: %s"
+msgstr ""
+
+#. translators: %s: field name.
+#: src/Admin/Editor.php:387
+#, php-format
+msgid "Empty field: %s"
+msgstr ""
+
+#: src/Admin/Editor.php:399
+msgid "Channel and target"
+msgstr ""
+
+#: src/Admin/Editor.php:402
+#: src/Admin/Editor.php:407
+msgid "Channel"
+msgstr ""
+
+#: src/Admin/Editor.php:407
+msgid "Changing the channel resets the attribute list below after saving."
+msgstr ""
+
+#: src/Admin/Editor.php:413
+msgid "TXT (tab-delimited)"
+msgstr ""
+
+#: src/Admin/Editor.php:415
+msgid "Format"
+msgstr ""
+
+#: src/Admin/Editor.php:415
+msgid "Only the formats of the selected channel are available."
+msgstr ""
+
+#: src/Admin/Editor.php:423
+msgid "Columns"
+msgstr ""
+
+#: src/Admin/Editor.php:425
+msgid "One column per line, in file order: column name = field (a field of the attribute mapping below, or any attribute you add there). Empty: every field under its own name."
+msgstr ""
+
+#: src/Admin/Editor.php:426
+msgid "XML elements"
+msgstr ""
+
+#: src/Admin/Editor.php:427
+msgid "Product element"
+msgstr ""
+
+#: src/Admin/Editor.php:428
+msgid "Root element and product element of the XML file (for example products and product)."
+msgstr ""
+
+#: src/Admin/Editor.php:429
+msgid "File name"
+msgstr ""
+
+#: src/Admin/Editor.php:429
+msgid "Letters, digits and dashes. The extension is added. Keep it stable: the platforms fetch this URL."
+msgstr ""
+
+#: src/Admin/Editor.php:434
+#: src/Admin/ListTable.php:47
+msgid "Language"
+msgstr ""
+
+#: src/Admin/Editor.php:434
+msgid "Titles, descriptions, categories and product URLs are exported in this language (TranslatePress)."
+msgstr ""
+
+#: src/Admin/Editor.php:439
+msgid "— Any country —"
+msgstr ""
+
+#: src/Admin/Editor.php:440
+#: src/Admin/ListTable.php:48
+msgid "Country"
+msgstr ""
+
+#: src/Admin/Editor.php:440
+msgid "Target country of the feed. Used by the price source."
+msgstr ""
+
+#: src/Admin/Editor.php:445
+#: src/Admin/ListTable.php:49
+#: src/Channels/Generic.php:75
+msgid "Currency"
+msgstr ""
+
+#: src/Admin/Editor.php:445
+msgid "Prices are written in this currency. Use a price source that returns prices in this currency."
+msgstr ""
+
+#: src/Admin/Editor.php:450
+msgid "Pricing zone ID (empty: zone of the country):"
+msgstr ""
+
+#: src/Admin/Editor.php:451
+msgid "Add ?wcpbc-manual-country=<country> to the product links"
+msgstr ""
+
+#: src/Admin/Editor.php:453
+msgid "Price source"
+msgstr ""
+
+#: src/Admin/Editor.php:475
+msgid "No product categories."
+msgstr ""
+
+#: src/Admin/Editor.php:507
+msgid "In stock"
+msgstr ""
+
+#: src/Admin/Editor.php:508
+msgid "Out of stock"
+msgstr ""
+
+#: src/Admin/Editor.php:509
+msgid "Backorder"
+msgstr ""
+
+#: src/Admin/Editor.php:510
+msgid "Preorder"
+msgstr ""
+
+#: src/Admin/Editor.php:514
+#: src/Admin/Editor.php:518
+#: src/Admin/Editor.php:794
+msgid "Meta key"
+msgstr ""
+
+#: src/Admin/Editor.php:514
+msgid "Value (empty: any value)"
+msgstr ""
+
+#: src/Admin/Editor.php:515
+#: src/Admin/Editor.php:521
+#: src/Channels/Generic.php:71
+#: src/Channels/Google.php:50
+#: src/Channels/Meta.php:47
+#: src/Channels/Microsoft.php:63
+#: src/Channels/Pinterest.php:50
+#: src/Channels/TikTok.php:48
+msgid "Availability"
+msgstr ""
+
+#: src/Admin/Editor.php:519
+#: src/Admin/Editor.php:691
+#: src/Admin/Editor.php:699
+msgid "Value"
+msgstr ""
+
+#: src/Admin/Editor.php:535
+#: src/Admin/ListTable.php:50
+msgid "Products"
+msgstr ""
+
+#: src/Admin/Editor.php:537
+msgid "Include categories"
+msgstr ""
+
+#: src/Admin/Editor.php:537
+msgid "None checked: all categories. Subcategories are included."
+msgstr ""
+
+#: src/Admin/Editor.php:538
+msgid "Exclude categories"
+msgstr ""
+
+#: src/Admin/Editor.php:539
+#: src/Admin/Editor.php:544
+msgid "Stock status"
+msgstr ""
+
+#: src/Admin/Editor.php:545
+msgid "Tags"
+msgstr ""
+
+#: src/Admin/Editor.php:545
+msgid "Only products with these tags"
+msgstr ""
+
+#: src/Admin/Editor.php:545
+msgid "Exclude products with these tags"
+msgstr ""
+
+#: src/Admin/Editor.php:545
+msgid "Tag slugs, separated by commas. Empty: no tag filter."
+msgstr ""
+
+#: src/Admin/Editor.php:546
+#: src/Admin/Editor.php:549
+msgid "Price range"
+msgstr ""
+
+#: src/Admin/Editor.php:547
+msgid "Min"
+msgstr ""
+
+#: src/Admin/Editor.php:548
+msgid "Max"
+msgstr ""
+
+#: src/Admin/Editor.php:549
+msgid "Empty: no limit. Uses the price shown to customers (sale price included)."
+msgstr ""
+
+#: src/Admin/Editor.php:550
+msgid "Variations"
+msgstr ""
+
+#: src/Admin/Editor.php:550
+msgid "Export each variation as its own item (linked by item_group_id); the variable parent is not exported"
+msgstr ""
+
+#: src/Admin/Editor.php:551
+msgid "Exclude product IDs"
+msgstr ""
+
+#: src/Admin/Editor.php:551
+msgid "Product or variation IDs, separated by commas."
+msgstr ""
+
+#: src/Admin/Editor.php:552
+msgid "Title contains"
+msgstr ""
+
+#: src/Admin/Editor.php:553
+msgid "Title does not contain"
+msgstr ""
+
+#: src/Admin/Editor.php:554
+msgid "Exclude when empty"
+msgstr ""
+
+#: src/Admin/Editor.php:554
+msgid "Feed attributes, separated by commas (for example gtin, brand). Products with an empty value are excluded."
+msgstr ""
+
+#: src/Admin/Editor.php:555
+msgid "Exclusion rules"
+msgstr ""
+
+#: src/Admin/Editor.php:555
+msgid "Exclude a product when its meta (or its parent's) has this value."
+msgstr ""
+
+#: src/Admin/Editor.php:556
+msgid "Availability rules"
+msgstr ""
+
+#: src/Admin/Editor.php:556
+msgid "Force an availability when a meta (or the parent's) has this value. The first matching rule wins."
+msgstr ""
+
+#: src/Admin/Editor.php:558
+msgid "Count the products that match the category, tag, stock and ID filters (before the other rules)."
+msgstr ""
+
+#: src/Admin/Editor.php:558
+msgid "Refresh count"
+msgstr ""
+
+#: src/Admin/Editor.php:568
+msgid "Titles and descriptions"
+msgstr ""
+
+#: src/Admin/Editor.php:571
+msgid "Title template"
+msgstr ""
+
+#: src/Admin/Editor.php:574
+msgid "Empty: product name (+ variation values). Tokens: {title}, {name}, {variation}, {brand}, {type}, {category}, {sku}, {attr:pa_color}, {meta:key}. {brand} and {type} are skipped when the name already contains them."
+msgstr ""
+
+#: src/Admin/Editor.php:576
+msgid "Brand in title"
+msgstr ""
+
+#: src/Admin/Editor.php:576
+msgid "Without a template: put the brand first when the title does not contain it"
+msgstr ""
+
+#: src/Admin/Editor.php:579
+#: src/Admin/Editor.php:582
+msgid "Name pattern"
+msgstr ""
+
+#: src/Admin/Editor.php:579
+#: src/Admin/Editor.php:583
+msgid "Type"
+msgstr ""
+
+#: src/Admin/Editor.php:579
+#: src/Admin/Editor.php:584
+#: src/Admin/Editor.php:691
+#: src/Admin/Editor.php:702
+msgid "Product category IDs"
+msgstr ""
+
+#: src/Admin/Editor.php:587
+msgid "Type by name"
+msgstr ""
+
+#: src/Admin/Editor.php:587
+msgid "Before the category table: the first rule whose pattern (regular expression) matches the product name gives the {type}, for products of these categories (empty: all)."
+msgstr ""
+
+#: src/Admin/Editor.php:588
+msgid "Brand spelling"
+msgstr ""
+
+#: src/Admin/Editor.php:588
+msgid "Write brand names as their brand term (\"TV JONES\" becomes \"TV Jones\")"
+msgstr ""
+
+#: src/Admin/Editor.php:589
+msgid "Remove from variation values"
+msgstr ""
+
+#: src/Admin/Editor.php:589
+msgid "Regular expressions, one per line, case-insensitive (for example ^\\d{6}\\s*[-–]\\s* removes a SKU prefix such as \"023936 - \")."
+msgstr ""
+
+#: src/Admin/Editor.php:596
+msgid "Short descriptions"
+msgstr ""
+
+#: src/Admin/Editor.php:596
+msgid "characters minimum (0: off)"
+msgstr ""
+
+#: src/Admin/Editor.php:597
+msgid "Fallback meta keys"
+msgstr ""
+
+#: src/Admin/Editor.php:597
+msgid "Used in this order when the description is shorter than the minimum (for example rank_math_description). Translated in the feed language."
+msgstr ""
+
+#: src/Admin/Editor.php:598
+msgid "Attributes"
+msgstr ""
+
+#: src/Admin/Editor.php:598
+msgid "Then add the visible product attributes as short sentences (\"Top: Solid spruce.\")"
+msgstr ""
+
+#: src/Admin/Editor.php:599
+msgid "Remove from descriptions"
+msgstr ""
+
+#: src/Admin/Editor.php:599
+msgid "Regular expressions, one per line, case-insensitive. Each match is removed (for example a call to action of the meta description)."
+msgstr ""
+
+#: src/Admin/Editor.php:600
+msgid "Email addresses"
+msgstr ""
+
+#: src/Admin/Editor.php:600
+msgid "Remove the sentences that contain an email address"
+msgstr ""
+
+#: src/Admin/Editor.php:614
+#: src/Admin/Editor.php:622
+msgid "Attribute mapping"
+msgstr ""
+
+#. translators: %s: channel name.
+#: src/Admin/Editor.php:618
+#, php-format
+msgid "Choose where each %s attribute comes from. \"Automatic\" uses the plugin rule shown under the attribute. Text values are taken in the feed language."
+msgstr ""
+
+#. translators: %s: product ID.
+#: src/Admin/Editor.php:627
+#, php-format
+msgid "Preview (#%s)"
+msgstr ""
+
+#: src/Admin/Editor.php:630
+#: src/Admin/Editor.php:828
+msgid "Preview"
+msgstr ""
+
+#: src/Admin/Editor.php:631
+#: src/Admin/Editor.php:691
+#: src/Admin/Editor.php:698
+msgid "Attribute"
+msgstr ""
+
+#: src/Admin/Editor.php:631
+#: src/Admin/Editor.php:786
+msgid "Source type"
+msgstr ""
+
+#: src/Admin/Editor.php:631
+msgid "Source"
+msgstr ""
+
+#: src/Admin/Editor.php:631
+#: src/Admin/Editor.php:797
+msgid "Options"
+msgstr ""
+
+#: src/Admin/Editor.php:634
+msgid "Required"
+msgstr ""
+
+#: src/Admin/Editor.php:635
+msgid "Recommended"
+msgstr ""
+
+#: src/Admin/Editor.php:636
+msgid "Optional"
+msgstr ""
+
+#: src/Admin/Editor.php:645
+msgid "Not sent"
+msgstr ""
+
+#: src/Admin/Editor.php:650
+msgid "Custom"
+msgstr ""
+
+#: src/Admin/Editor.php:660
+msgid "Add an attribute (name as expected by the platform):"
+msgstr ""
+
+#: src/Admin/Editor.php:661
+msgid "Add attribute"
+msgstr ""
+
+#: src/Admin/Editor.php:665
+msgid "MPN only for these brands"
+msgstr ""
+
+#: src/Admin/Editor.php:665
+msgid "One brand per line. Empty: the MPN is sent for every brand. Useful when the SKU is the manufacturer part number only for your own brands."
+msgstr ""
+
+#: src/Admin/Editor.php:666
+msgid "MPN and GTIN"
+msgstr ""
+
+#: src/Admin/Editor.php:666
+msgid "Send the MPN only when the product has no valid GTIN"
+msgstr ""
+
+#: src/Admin/Editor.php:667
+msgid "Priority brands"
+msgstr ""
+
+#: src/Admin/Editor.php:667
+msgid "Products with several brand terms: a brand of this list wins (first listed first). One brand per line."
+msgstr ""
+
+#: src/Admin/Editor.php:668
+msgid "Several brands"
+msgstr ""
+
+#: src/Admin/Editor.php:668
+msgid "Otherwise use the brand that opens the product name, else the fallback of the brand source"
+msgstr ""
+
+#: src/Admin/Editor.php:676
+msgid "Per-product values"
+msgstr ""
+
+#: src/Admin/Editor.php:676
+msgid "One value per line: product_id attribute=value (product or parent variable product ID). Applied after the field rules; replaces the computed value."
+msgstr ""
+
+#: src/Admin/Editor.php:689
+msgid "Field rules"
+msgstr ""
+
+#: src/Admin/Editor.php:690
+msgid "Fill an empty attribute for some categories: a fixed value, or the label of the first word found in the product name (word=label; …). Inactive rules are kept but not applied."
+msgstr ""
+
+#: src/Admin/Editor.php:691
+msgid "Words in the name (word=label; …)"
+msgstr ""
+
+#: src/Admin/Editor.php:691
+#: src/Admin/Editor.php:701
+msgid "Google category IDs"
+msgstr ""
+
+#: src/Admin/Editor.php:700
+msgid "Words in the name"
+msgstr ""
+
+#. translators: %s: automatic rule.
+#: src/Admin/Editor.php:778
+#, php-format
+msgid "Automatic: %s"
+msgstr ""
+
+#: src/Admin/Editor.php:784
+msgid "Remove"
+msgstr ""
+
+#: src/Admin/Editor.php:792
+msgid "Attribute name"
+msgstr ""
+
+#: src/Admin/Editor.php:795
+msgid "Feed attribute to copy"
+msgstr ""
+
+#: src/Admin/Editor.php:798
+msgid "Prefix"
+msgstr ""
+
+#: src/Admin/Editor.php:799
+msgid "Suffix"
+msgstr ""
+
+#: src/Admin/Editor.php:800
+msgid "Fallback when empty"
+msgstr ""
+
+#: src/Admin/Editor.php:805
+msgid "Rewrite values (from=to; …)"
+msgstr ""
+
+#: src/Admin/Editor.php:810
+msgid "First term"
+msgstr ""
+
+#: src/Admin/Editor.php:811
+msgid "All terms"
+msgstr ""
+
+#: src/Admin/Editor.php:812
+msgid "Full path (A > B)"
+msgstr ""
+
+#: src/Admin/Editor.php:813
+msgid "Top-level term"
+msgstr ""
+
+#: src/Admin/Editor.php:817
+msgid "Terms"
+msgstr ""
+
+#: src/Admin/Editor.php:818
+msgid "Use the parent value when a variation has none"
+msgstr ""
+
+#: src/Admin/Editor.php:819
+msgid "Translate in the feed language"
+msgstr ""
+
+#: src/Admin/Editor.php:820
+msgid "One value only: send nothing when the product has several values"
+msgstr ""
+
+#: src/Admin/Editor.php:875
+msgid "Categories"
+msgstr ""
+
+#: src/Admin/Editor.php:877
+msgid "Default Google category"
+msgstr ""
+
+#: src/Admin/Editor.php:877
+msgid "Numeric ID from the Google product taxonomy (for example 80 for Guitars). Used when no product category below has one."
+msgstr ""
+
+#: src/Admin/Editor.php:879
+msgid "Per product category: Google category ID and the {type} used by the title template. The deepest category with a value wins."
+msgstr ""
+
+#: src/Admin/Editor.php:880
+msgid "The type is left out when the name already contains it. Words in brackets are optional: \"[Guitar] Strap\" adds \"Guitar Strap\", or nothing when the name already says \"Strap\"."
+msgstr ""
+
+#: src/Admin/Editor.php:881
+msgid "Product category"
+msgstr ""
+
+#: src/Admin/Editor.php:881
+#: src/Admin/Editor.php:903
+msgid "Google category ID"
+msgstr ""
+
+#: src/Admin/Editor.php:881
+#: src/Admin/Editor.php:904
+msgid "Type for the title"
+msgstr ""
+
+#: src/Admin/Editor.php:908
+msgid "Per product"
+msgstr ""
+
+#: src/Admin/Editor.php:908
+msgid "One product per line: product_id=google_category_id. Overrides the category table."
+msgstr ""
+
+#: src/Admin/Editor.php:919
+msgid "Links and images"
+msgstr ""
+
+#: src/Admin/Editor.php:921
+msgid "HTTPS"
+msgstr ""
+
+#: src/Admin/Editor.php:921
+msgid "Write https:// links when the site runs on https"
+msgstr ""
+
+#: src/Admin/Editor.php:926
+msgid "UTM tags"
+msgstr ""
+
+#: src/Admin/Editor.php:926
+msgid "Optional. Leave empty for clean links."
+msgstr ""
+
+#: src/Admin/Editor.php:927
+msgid "Other link parameters"
+msgstr ""
+
+#: src/Admin/Editor.php:927
+msgid "One per line: key=value. Added after the language URL conversion."
+msgstr ""
+
+#: src/Admin/Editor.php:928
+msgid "Original file (recommended)"
+msgstr ""
+
+#: src/Admin/Editor.php:932
+msgid "Image size"
+msgstr ""
+
+#: src/Admin/Editor.php:933
+msgid "Additional images"
+msgstr ""
+
+#: src/Admin/Editor.php:933
+msgid "gallery images at most"
+msgstr ""
+
+#: src/Admin/Editor.php:944
+msgid "Schedule"
+msgstr ""
+
+#: src/Admin/Editor.php:947
+msgid "Manually only (Generate now button or WP-CLI)"
+msgstr ""
+
+#: src/Admin/Editor.php:948
+msgid "Every hour"
+msgstr ""
+
+#: src/Admin/Editor.php:949
+#: src/Admin/ListTable.php:172
+msgid "Twice a day"
+msgstr ""
+
+#: src/Admin/Editor.php:950
+msgid "Every day"
+msgstr ""
+
+#: src/Admin/Editor.php:951
+msgid "Every week"
+msgstr ""
+
+#: src/Admin/Editor.php:953
+#: src/Admin/Editor.php:958
+msgid "Regenerate"
+msgstr ""
+
+#: src/Admin/Editor.php:958
+msgid "Runs in the background with Action Scheduler (WP-Cron when it is not available)."
+msgstr ""
+
+#: src/Admin/Editor.php:959
+msgid "Any time"
+msgstr ""
+
+#: src/Admin/Editor.php:963
+msgid "Start hour"
+msgstr ""
+
+#: src/Admin/Editor.php:963
+msgid "Daily and weekly feeds start at this hour of the site time zone (off-peak hours are best)."
+msgstr ""
+
+#. translators: %s: time zone name.
+#: src/Admin/Editor.php:965
+#, php-format
+msgid "Site time zone: %s."
+msgstr ""
+
+#: src/Admin/Editor.php:968
+msgid "Batch size"
+msgstr ""
+
+#: src/Admin/Editor.php:968
+msgid "products per batch"
+msgstr ""
+
+#: src/Admin/Editor.php:1172
+msgid "Enter a feed name."
+msgstr ""
+
+#: src/Admin/Editor.php:1178
+msgid "Another feed already uses this file name."
+msgstr ""
+
+#: src/Admin/ListTable.php:46
+msgid "Name"
+msgstr ""
+
+#: src/Admin/ListTable.php:51
+msgid "Last generated"
+msgstr ""
+
+#: src/Admin/ListTable.php:52
+msgid "Status"
+msgstr ""
+
+#: src/Admin/ListTable.php:64
+#: src/Admin/ListTable.php:182
+msgid "Generate now"
+msgstr ""
+
+#: src/Admin/ListTable.php:65
+#: src/Admin/ListTable.php:184
+msgid "Delete"
+msgstr ""
+
+#: src/Admin/ListTable.php:87
+msgid "All"
+msgstr ""
+
+#: src/Admin/ListTable.php:97
+msgid "Errors"
+msgstr ""
+
+#: src/Admin/ListTable.php:170
+msgid "Manual"
+msgstr ""
+
+#: src/Admin/ListTable.php:171
+msgid "Hourly"
+msgstr ""
+
+#: src/Admin/ListTable.php:173
+msgid "Daily"
+msgstr ""
+
+#: src/Admin/ListTable.php:174
+msgid "Weekly"
+msgstr ""
+
+#: src/Admin/ListTable.php:181
+msgid "Edit"
+msgstr ""
+
+#: src/Admin/ListTable.php:183
+msgid "Duplicate"
+msgstr ""
+
+#: src/Admin/ListTable.php:186
+msgid "(no name)"
+msgstr ""
+
+#. translators: %s: human time difference.
+#: src/Admin/ListTable.php:218
+#, php-format
+msgid "%s ago"
+msgstr ""
+
+#: src/Admin/ListTable.php:233
+msgid "No feed yet."
+msgstr ""
+
+#: src/Channels/Generic.php:32
+msgid "Generic CSV / XML"
+msgstr ""
+
+#: src/Channels/Generic.php:39
+msgid "Give this URL to the platform or tool that reads the file. Choose the columns in the Columns setting."
+msgstr ""
+
+#: src/Channels/Generic.php:63
+#: src/Channels/Google.php:43
+#: src/Channels/Meta.php:43
+#: src/Channels/Microsoft.php:53
+#: src/Channels/Pinterest.php:43
+#: src/Channels/TikTok.php:44
+#: src/Sources.php:35
+msgid "ID"
+msgstr ""
+
+#: src/Channels/Generic.php:64
+#: src/Channels/Google.php:44
+#: src/Channels/Meta.php:44
+#: src/Channels/Microsoft.php:54
+#: src/Channels/Pinterest.php:44
+#: src/Channels/TikTok.php:45
+msgid "Item group ID"
+msgstr ""
+
+#: src/Channels/Generic.php:65
+#: src/Sources.php:37
+msgid "SKU"
+msgstr ""
+
+#: src/Channels/Generic.php:66
+#: src/Channels/Google.php:45
+#: src/Channels/Meta.php:45
+#: src/Channels/Microsoft.php:55
+#: src/Channels/Pinterest.php:45
+#: src/Channels/TikTok.php:46
+#: src/Sources.php:39
+msgid "Title"
+msgstr ""
+
+#: src/Channels/Generic.php:67
+#: src/Channels/Google.php:46
+#: src/Channels/Meta.php:46
+#: src/Channels/Microsoft.php:56
+#: src/Channels/Pinterest.php:46
+#: src/Channels/TikTok.php:47
+#: src/Sources.php:40
+msgid "Description"
+msgstr ""
+
+#: src/Channels/Generic.php:68
+#: src/Channels/Google.php:47
+#: src/Channels/Meta.php:50
+#: src/Channels/Microsoft.php:57
+#: src/Channels/Pinterest.php:47
+#: src/Channels/TikTok.php:53
+msgid "Link"
+msgstr ""
+
+#: src/Channels/Generic.php:69
+#: src/Channels/Google.php:48
+#: src/Channels/Meta.php:51
+#: src/Channels/Microsoft.php:58
+#: src/Channels/Pinterest.php:48
+#: src/Channels/TikTok.php:54
+msgid "Image link"
+msgstr ""
+
+#: src/Channels/Generic.php:70
+#: src/Channels/Google.php:49
+#: src/Channels/Meta.php:53
+#: src/Channels/Microsoft.php:59
+#: src/Channels/Pinterest.php:49
+#: src/Channels/TikTok.php:55
+msgid "Additional image links"
+msgstr ""
+
+#: src/Channels/Generic.php:72
+#: src/Channels/Google.php:52
+#: src/Channels/Meta.php:49
+#: src/Channels/Microsoft.php:60
+#: src/Channels/Pinterest.php:51
+#: src/Channels/TikTok.php:50
+msgid "Price"
+msgstr ""
+
+#: src/Channels/Generic.php:73
+#: src/Channels/Google.php:53
+#: src/Channels/Meta.php:54
+#: src/Channels/Microsoft.php:61
+#: src/Channels/Pinterest.php:52
+#: src/Channels/TikTok.php:51
+msgid "Sale price"
+msgstr ""
+
+#: src/Channels/Generic.php:74
+#: src/Channels/Google.php:54
+#: src/Channels/Meta.php:55
+#: src/Channels/Microsoft.php:62
+#: src/Channels/Pinterest.php:53
+#: src/Channels/TikTok.php:52
+msgid "Sale price effective date"
+msgstr ""
+
+#: src/Channels/Generic.php:76
+#: src/Channels/Google.php:55
+#: src/Channels/Meta.php:52
+#: src/Channels/Microsoft.php:65
+#: src/Channels/Pinterest.php:54
+#: src/Channels/TikTok.php:56
+msgid "Brand"
+msgstr ""
+
+#: src/Channels/Generic.php:77
+#: src/Channels/Google.php:56
+#: src/Channels/Meta.php:56
+#: src/Channels/Microsoft.php:66
+#: src/Channels/Pinterest.php:55
+#: src/Channels/TikTok.php:57
+msgid "GTIN"
+msgstr ""
+
+#: src/Channels/Generic.php:78
+#: src/Channels/Google.php:57
+#: src/Channels/Meta.php:57
+#: src/Channels/Microsoft.php:67
+#: src/Channels/Pinterest.php:56
+#: src/Channels/TikTok.php:58
+msgid "MPN"
+msgstr ""
+
+#: src/Channels/Generic.php:79
+#: src/Channels/Google.php:59
+#: src/Channels/Meta.php:48
+#: src/Channels/Microsoft.php:64
+#: src/Channels/Pinterest.php:57
+#: src/Channels/TikTok.php:49
+msgid "Condition"
+msgstr ""
+
+#: src/Channels/Generic.php:80
+#: src/Channels/Google.php:60
+#: src/Channels/Meta.php:58
+#: src/Channels/Pinterest.php:58
+#: src/Channels/TikTok.php:59
+msgid "Google product category"
+msgstr ""
+
+#: src/Channels/Generic.php:81
+#: src/Channels/Google.php:61
+#: src/Channels/Meta.php:60
+#: src/Channels/Microsoft.php:70
+#: src/Channels/Pinterest.php:59
+#: src/Channels/TikTok.php:60
+msgid "Product type"
+msgstr ""
+
+#: src/Channels/Generic.php:82
+#: src/Channels/Google.php:62
+#: src/Channels/Meta.php:61
+#: src/Channels/Microsoft.php:71
+#: src/Channels/Pinterest.php:60
+#: src/Channels/TikTok.php:61
+msgid "Color"
+msgstr ""
+
+#: src/Channels/Generic.php:83
+#: src/Channels/Google.php:63
+#: src/Channels/Meta.php:62
+#: src/Channels/Microsoft.php:72
+#: src/Channels/Pinterest.php:61
+#: src/Channels/TikTok.php:62
+msgid "Size"
+msgstr ""
+
+#: src/Channels/Generic.php:84
+#: src/Channels/Google.php:64
+#: src/Channels/Meta.php:63
+#: src/Channels/Microsoft.php:73
+#: src/Channels/Pinterest.php:62
+#: src/Channels/TikTok.php:63
+msgid "Gender"
+msgstr ""
+
+#: src/Channels/Generic.php:85
+#: src/Channels/Google.php:65
+#: src/Channels/Meta.php:64
+#: src/Channels/Microsoft.php:74
+#: src/Channels/Pinterest.php:63
+#: src/Channels/TikTok.php:64
+msgid "Age group"
+msgstr ""
+
+#: src/Channels/Generic.php:86
+#: src/Channels/Google.php:66
+#: src/Channels/Meta.php:65
+#: src/Channels/Microsoft.php:75
+#: src/Channels/Pinterest.php:64
+#: src/Channels/TikTok.php:65
+msgid "Material"
+msgstr ""
+
+#: src/Channels/Generic.php:87
+#: src/Channels/Google.php:67
+#: src/Channels/Meta.php:66
+#: src/Channels/Microsoft.php:76
+#: src/Channels/Pinterest.php:65
+#: src/Channels/TikTok.php:66
+msgid "Pattern"
+msgstr ""
+
+#: src/Channels/Generic.php:88
+#: src/Channels/Google.php:68
+#: src/Channels/Meta.php:67
+#: src/Channels/Pinterest.php:66
+#: src/Channels/TikTok.php:67
+msgid "Shipping weight"
+msgstr ""
+
+#: src/Channels/Google.php:28
+msgid "Google Merchant Center"
+msgstr ""
+
+#: src/Channels/Google.php:35
+msgid "Merchant Center: Products > Data sources > Add product source > Add products from a file > enter this URL with a daily fetch."
+msgstr ""
+
+#: src/Channels/Google.php:51
+msgid "Availability date"
+msgstr ""
+
+#: src/Channels/Google.php:58
+#: src/Channels/Microsoft.php:68
+msgid "Identifier exists"
+msgstr ""
+
+#: src/Channels/Google.php:69
+#: src/Channels/Meta.php:69
+#: src/Channels/Microsoft.php:79
+#: src/Channels/Pinterest.php:67
+#: src/Channels/TikTok.php:69
+msgid "Custom label 0"
+msgstr ""
+
+#: src/Channels/Google.php:70
+#: src/Channels/Meta.php:70
+#: src/Channels/Microsoft.php:80
+#: src/Channels/Pinterest.php:68
+#: src/Channels/TikTok.php:70
+msgid "Custom label 1"
+msgstr ""
+
+#: src/Channels/Google.php:71
+#: src/Channels/Meta.php:71
+#: src/Channels/Microsoft.php:81
+#: src/Channels/Pinterest.php:69
+#: src/Channels/TikTok.php:71
+msgid "Custom label 2"
+msgstr ""
+
+#: src/Channels/Google.php:72
+#: src/Channels/Meta.php:72
+#: src/Channels/Microsoft.php:82
+#: src/Channels/Pinterest.php:70
+#: src/Channels/TikTok.php:72
+msgid "Custom label 3"
+msgstr ""
+
+#: src/Channels/Google.php:73
+#: src/Channels/Meta.php:73
+#: src/Channels/Microsoft.php:83
+#: src/Channels/Pinterest.php:71
+#: src/Channels/TikTok.php:73
+msgid "Custom label 4"
+msgstr ""
+
+#: src/Channels/Meta.php:28
+msgid "Meta Catalog (Facebook, Instagram)"
+msgstr ""
+
+#: src/Channels/Meta.php:35
+msgid "Commerce Manager: Catalog > Data sources > Data feed > Scheduled feed > paste this URL."
+msgstr ""
+
+#: src/Channels/Meta.php:59
+msgid "Facebook product category"
+msgstr ""
+
+#: src/Channels/Meta.php:68
+msgid "Status (active, archived)"
+msgstr ""
+
+#: src/Channels/Microsoft.php:29
+msgid "Microsoft Merchant Center (Bing)"
+msgstr ""
+
+#: src/Channels/Microsoft.php:36
+msgid "Microsoft Merchant Center: your store > Catalog management > Feeds > Create feed > Scheduled download > paste this URL."
+msgstr ""
+
+#: src/Channels/Microsoft.php:69
+msgid "Product category (Google taxonomy ID)"
+msgstr ""
+
+#: src/Channels/Microsoft.php:77
+msgid "Shipping (country:service:price)"
+msgstr ""
+
+#: src/Channels/Microsoft.php:78
+msgid "Seller name (aggregators)"
+msgstr ""
+
+#: src/Channels/Pinterest.php:28
+msgid "Pinterest Catalog"
+msgstr ""
+
+#: src/Channels/Pinterest.php:35
+msgid "Pinterest business account: Catalogs > Data sources > Add data source > paste this URL."
+msgstr ""
+
+#: src/Channels/TikTok.php:29
+msgid "TikTok Catalog"
+msgstr ""
+
+#: src/Channels/TikTok.php:36
+msgid "TikTok Ads Manager: Assets > Catalogs > your catalog > Add products > Data feed > paste this URL with a daily schedule."
+msgstr ""
+
+#: src/Channels/TikTok.php:68
+msgid "Video link"
+msgstr ""
+
+#: src/Endpoint.php:271
+#: src/Generator.php:42
+msgid "Feed not found."
+msgstr ""
+
+#: src/Feeds.php:31
+msgid "Product feeds"
+msgstr ""
+
+#: src/Feeds.php:32
+#: src/Feeds.php:187
+msgid "Product feed"
+msgstr ""
+
+#: src/Generator.php:49
+msgid "Unknown channel."
+msgstr ""
+
+#: src/Generator.php:70
+#: src/Generator.php:131
+#: src/Generator.php:132
+#: src/Generator.php:217
+#: src/Generator.php:218
+msgid "The feed file cannot be written."
+msgstr ""
+
+#: src/Generator.php:98
+msgid "No generation in progress."
+msgstr ""
+
+#: src/Generator.php:226
+#: src/Generator.php:227
+msgid "The feed file cannot be published."
+msgstr ""
+
+#. translators: %s: file name, e.g. "google-en.xml".
+#: src/Generator.php:278
+#, php-format
+msgid "The output folder has a file named %s that the plugin did not write: it is left untouched and the feed was not generated. Remove or rename that file, or change the file name of the feed."
+msgstr ""
+
+#: src/Integrations/PriceBasedOnCountry.php:51
+msgid "Price Based on Country (zone of the feed country)"
+msgstr ""
+
+#: src/Plugin.php:60
+msgid "Oli Product Feed requires WooCommerce to be installed and active."
+msgstr ""
+
+#: src/Pricing.php:25
+msgid "WooCommerce prices"
+msgstr ""
+
+#: src/Scheduler.php:54
+msgid "Every 15 minutes (Oli Product Feed)"
+msgstr ""
+
+#: src/Sources.php:36
+msgid "Parent ID"
+msgstr ""
+
+#: src/Sources.php:38
+msgid "Parent SKU"
+msgstr ""
+
+#: src/Sources.php:41
+msgid "Short description"
+msgstr ""
+
+#: src/Sources.php:42
+msgid "Product URL"
+msgstr ""
+
+#: src/Sources.php:43
+msgid "GTIN, UPC, EAN or ISBN (WooCommerce)"
+msgstr ""
+
+#: src/Sources.php:44
+msgid "Weight"
+msgstr ""
+
+#: src/Sources.php:45
+msgid "Length"
+msgstr ""
+
+#: src/Sources.php:46
+msgid "Width"
+msgstr ""
+
+#: src/Sources.php:47
+msgid "Height"
+msgstr ""
+
+#: src/Sources.php:48
+msgid "Stock quantity"
+msgstr ""
+
+#: src/Sources.php:49
+msgid "Product type (simple, variation…)"
+msgstr ""
+
+#: src/Storage.php:108
+msgid "it is a symbolic link, or one of its parent folders is"
+msgstr ""
+
+#: src/Storage.php:109
+msgid "its real path is outside the uploads directory"
+msgstr ""
+
+#: src/Storage.php:110
+msgid "it is not writable"
+msgstr ""
+
+#: src/Storage.php:111
+msgid "it cannot be created (parent folder not writable, or a file of that name is in the way)"
+msgstr ""
+
+#: src/Storage.php:112
+msgid "the uploads directory is not available"
+msgstr ""
+
+#. translators: 1: folder, e.g. "merchant-feeds", 2: reason, e.g. "it is not writable".
+#: src/Storage.php:116
+#, php-format
+msgid "The output folder wp-content/uploads/%1$s cannot be used: %2$s."
+msgstr ""
