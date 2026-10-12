@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Oli Product Feed - early feed endpoint
  * Description: Optional loader. Serves ?oliprfe_feed=<file> before the regular plugins load (faster). Copy this file to wp-content/mu-plugins/. It does nothing when Oli Product Feed is inactive or its WordPress serving is off. Expects the plugin folder name oli-product-feed (the WordPress.org slug).
- * Version: 0.3.6
+ * Version: 0.3.7
  * Author: Olivier Bigras
  * License: GPLv2 or later
  *

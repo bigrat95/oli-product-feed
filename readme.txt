@@ -1,10 +1,11 @@
 === Oli Product Feed ===
 Contributors: bigrat95
+Donate link: https://www.paypal.com/donate/?hosted_button_id=29SAPKFAHMTNW
 Tags: product feed, google merchant center, tiktok, facebook catalog, woocommerce
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.3.6
+Stable tag: 0.3.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,6 +93,9 @@ The scheduled tasks and their Action Scheduler history are always removed. When 
 
 == Changelog ==
 
+= 0.3.7 =
+* NEW: Feeds and Donate links on the Plugins screen, optional support notice on plugin screens, footer donation link, and Donate link on the WordPress.org plugin page (PayPal)
+
 = 0.3.6 =
 * Namespace renamed from `OliProductFeed` to `Oliprfe` so the plugin prefix is a single segment of four or more characters (the previous namespace was detected as the too-short prefix `oli`).
 * Admin output: every form fragment is escaped late with `wp_kses` at the echo site (no unsanitized variables echoed).
@@ -146,6 +150,9 @@ The scheduled tasks and their Action Scheduler history are always removed. When 
 * First version: Google Merchant Center feeds, TranslatePress, Price Based on Country, batches, WP-CLI.
 
 == Upgrade Notice ==
+
+= 0.3.7 =
+Adds Donate / support links (Plugins screen, plugin notice, WordPress.org Donate link).
 
 = 0.3.6 =
 WordPress.org review fixes: `Oliprfe` namespace, late escaping with `wp_kses`, safer must-use loader.

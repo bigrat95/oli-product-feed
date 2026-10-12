@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.7 (2026-10-12)
+
+Donate / support links (same pattern as Oli Media Cleaner).
+
+- Plugins screen: Feeds + Donate action links, Donate in plugin meta row
+- Dismissible support notice on plugin admin screens
+- Footer donation line on feeds list, settings and feed editor
+- `Donate link` in `readme.txt` for the WordPress.org plugin page (PayPal)
+
 ## 0.3.6 (2026-10-12)
 
 WordPress.org plugin review fixes (second round).

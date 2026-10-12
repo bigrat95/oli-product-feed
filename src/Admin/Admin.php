@@ -37,7 +37,10 @@ final class Admin {
 		add_action( 'admin_post_oliprfe_generate_all', array( __CLASS__, 'handle_generate_all' ) );
 		add_action( 'wp_ajax_oliprfe_feed_status', array( __CLASS__, 'ajax_status' ) );
 		add_action( 'wp_ajax_oliprfe_match_count', array( __CLASS__, 'ajax_match_count' ) );
+		add_action( 'wp_ajax_oliprfe_dismiss_donate', array( __CLASS__, 'ajax_dismiss_donate' ) );
+		add_action( 'admin_notices', array( __CLASS__, 'donate_notice' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( OLIPRFE_FILE ), array( __CLASS__, 'action_links' ) );
+		add_filter( 'plugin_row_meta', array( __CLASS__, 'plugin_row_meta' ), 10, 2 );
 	}
 
 	/**
@@ -71,14 +74,127 @@ final class Admin {
 	}
 
 	/**
-	 * Plugins screen link.
+	 * Plugins screen links (Feeds + Donate).
 	 *
 	 * @param string[] $links Links.
 	 * @return string[]
 	 */
 	public static function action_links( $links ) {
-		array_unshift( $links, '<a href="' . esc_url( self::url() ) . '">' . esc_html__( 'Feeds', 'oli-product-feed' ) . '</a>' );
+		$feeds  = '<a href="' . esc_url( self::url() ) . '">' . esc_html__( 'Feeds', 'oli-product-feed' ) . '</a>';
+		$donate = '<a href="' . esc_url( OLIPRFE_DONATE_URL ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Donate', 'oli-product-feed' ) . '</a>';
+		array_unshift( $links, $feeds, $donate );
 		return $links;
+	}
+
+	/**
+	 * Donate in plugin meta row.
+	 *
+	 * @param string[] $links Links.
+	 * @param string   $file  Basename.
+	 * @return string[]
+	 */
+	public static function plugin_row_meta( $links, $file ) {
+		if ( $file !== plugin_basename( OLIPRFE_FILE ) ) {
+			return $links;
+		}
+		$links[] = '<a href="' . esc_url( OLIPRFE_DONATE_URL ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Donate', 'oli-product-feed' ) . '</a>';
+		return $links;
+	}
+
+	/**
+	 * Whether the current admin screen belongs to this plugin.
+	 *
+	 * @return bool
+	 */
+	public static function is_plugin_screen() {
+		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		if ( ! $screen ) {
+			return false;
+		}
+		return false !== strpos( (string) $screen->id, self::SLUG );
+	}
+
+	/**
+	 * Dismissible support notice on plugin screens.
+	 */
+	public static function donate_notice() {
+		if ( ! self::is_plugin_screen() || ! current_user_can( Settings::capability() ) ) {
+			return;
+		}
+		if ( get_user_meta( get_current_user_id(), 'oliprfe_donate_dismissed', true ) ) {
+			return;
+		}
+		?>
+		<div class="notice notice-info is-dismissible oliprfe-donate-notice">
+			<p>
+				<?php
+				echo wp_kses(
+					sprintf(
+						/* translators: %s: donate URL */
+						__( 'Enjoying Oli Product Feed? <a href="%s" target="_blank" rel="noopener noreferrer">Buy me a coffee</a> — your support keeps the plugin free and maintained.', 'oli-product-feed' ),
+						esc_url( OLIPRFE_DONATE_URL )
+					),
+					array(
+						'a' => array(
+							'href'   => true,
+							'target' => true,
+							'rel'    => true,
+						),
+					)
+				);
+				?>
+			</p>
+		</div>
+		<script>
+		(function () {
+			var notice = document.querySelector('.oliprfe-donate-notice');
+			if (!notice || typeof oliPfAdmin === 'undefined') return;
+			notice.addEventListener('click', function (e) {
+				if (!e.target.classList.contains('notice-dismiss')) return;
+				var body = new FormData();
+				body.append('action', 'oliprfe_dismiss_donate');
+				body.append('nonce', oliPfAdmin.donateNonce || '');
+				if (window.fetch) {
+					fetch(oliPfAdmin.ajaxUrl, { method: 'POST', body: body, credentials: 'same-origin' });
+				}
+			});
+		})();
+		</script>
+		<?php
+	}
+
+	/**
+	 * Persist donate notice dismissal.
+	 */
+	public static function ajax_dismiss_donate() {
+		check_ajax_referer( 'oliprfe_donate', 'nonce' );
+		if ( ! current_user_can( Settings::capability() ) ) {
+			wp_send_json_error( null, 403 );
+		}
+		update_user_meta( get_current_user_id(), 'oliprfe_donate_dismissed', 1 );
+		wp_send_json_success();
+	}
+
+	/**
+	 * Footer donation line used on plugin screens.
+	 */
+	public static function support_footer() {
+		echo '<p class="description" style="margin-top:20px;">';
+		echo wp_kses(
+			sprintf(
+				/* translators: %s: donate URL */
+				__( 'If this plugin helps you, please consider a <a href="%s" target="_blank" rel="noopener noreferrer">donation</a>. Thank you!', 'oli-product-feed' ),
+				esc_url( OLIPRFE_DONATE_URL )
+			),
+			array(
+				'a' => array(
+					'href'   => true,
+					'target' => true,
+					'rel'    => true,
+				),
+			)
+		);
+		echo '</p>';
 	}
 
 	/**
@@ -113,9 +229,10 @@ final class Admin {
 			'oli-pf-admin',
 			'oliPfAdmin',
 			array(
-				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-				'nonce'   => wp_create_nonce( 'oliprfe_feed_status' ),
-				'i18n'    => array(
+				'ajaxUrl'     => admin_url( 'admin-ajax.php' ),
+				'nonce'       => wp_create_nonce( 'oliprfe_feed_status' ),
+				'donateNonce' => wp_create_nonce( 'oliprfe_donate' ),
+				'i18n'        => array(
 					'copy'       => __( 'Copy', 'oli-product-feed' ),
 					'copied'     => __( 'Copied', 'oli-product-feed' ),
 					'copiedLong' => __( 'Feed URL copied to clipboard.', 'oli-product-feed' ),
@@ -398,7 +515,9 @@ final class Admin {
 		if ( empty( Feeds::all_ids() ) ) {
 			echo '<div class="opf-empty"><span class="dashicons dashicons-rss" aria-hidden="true"></span><h2>' . esc_html__( 'Create your first product feed', 'oli-product-feed' ) . '</h2>';
 			echo '<p>' . esc_html__( 'One feed per platform, language and currency. The file is regenerated in the background and its URL never changes.', 'oli-product-feed' ) . '</p>';
-			echo '<p><a class="button button-primary" href="' . esc_url( self::url( array( 'action' => 'new' ) ) ) . '">' . esc_html__( 'Add New Feed', 'oli-product-feed' ) . '</a></p></div></div>';
+			echo '<p><a class="button button-primary" href="' . esc_url( self::url( array( 'action' => 'new' ) ) ) . '">' . esc_html__( 'Add New Feed', 'oli-product-feed' ) . '</a></p></div>';
+			self::support_footer();
+			echo '</div>';
 			return;
 		}
 		$table->views();
@@ -411,7 +530,9 @@ final class Admin {
 		echo '</form>';
 		echo '<form method="post" action="' . esc_url( self::url() ) . '">';
 		$table->display();
-		echo '</form></div>';
+		echo '</form>';
+		self::support_footer();
+		echo '</div>';
 	}
 
 	/**
@@ -479,7 +600,9 @@ final class Admin {
 		wp_nonce_field( 'oliprfe_generate_all' );
 		echo '<p>' . esc_html__( 'Regenerates every active feed in the background. The current files stay online until the new ones replace them.', 'oli-product-feed' ) . '</p>';
 		submit_button( __( 'Regenerate all active feeds', 'oli-product-feed' ), 'secondary', 'submit', false );
-		echo '</form></div>';
+		echo '</form>';
+		self::support_footer();
+		echo '</div>';
 	}
 
 	/**

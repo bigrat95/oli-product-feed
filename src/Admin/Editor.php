@@ -136,7 +136,9 @@ final class Editor {
 		self::box_links( $feed );
 		self::box_schedule( $feed );
 		echo '<p class="opf-submit-bottom"><button type="submit" class="button button-primary button-large" name="save" value="1">' . esc_html__( 'Save feed', 'oli-product-feed' ) . '</button></p>';
-		echo '</div></div><br class="clear"></div></form></div>';
+		echo '</div></div><br class="clear"></div></form>';
+		Admin::support_footer();
+		echo '</div>';
 	}
 
 	/**
