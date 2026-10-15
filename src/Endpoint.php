@@ -3,7 +3,7 @@
  * Optional serving of the feed files through WordPress (?oliprfe_feed=<file>): short Cache-Control,
  * X-Robots-Tag noindex, Content-Type, ETag and Last-Modified, whatever the host or CDN does with static files.
  * The pre-generated file is streamed; the feed is never built during the request. Served as early as possible:
- * while the plugins load (plugin file or mu-plugin loader), else on init (priority 1).
+ * while the plugins load (plugin file), else on init (priority 1).
  *
  * @package Oliprfe
  */
@@ -39,8 +39,8 @@ final class Endpoint {
 	}
 
 	/**
-	 * Earliest path: serves a feed while the plugins are still loading (plugin file, or the optional
-	 * mu-plugin loader), from the autoloaded index only: no WooCommerce, TranslatePress, query or theme.
+	 * Earliest path: serves a feed while the plugins are still loading (plugin file),
+	 * from the autoloaded index only: no WooCommerce, TranslatePress, query or theme.
 	 * Unknown slugs fall through to the init path (full lookup, 404).
 	 */
 	public static function serve_early() {

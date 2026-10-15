@@ -1,12 +1,12 @@
 /**
  * Oli Product Feed admin script (plugin screens only, no jQuery).
  * Copy URL, confirmations, attribute mapping, schedule, channel formats, match count, error summary and generation progress.
- * Strings come from wp_localize_script( 'oli-pf-admin', 'oliPfAdmin', { i18n, ajaxUrl, nonce } ).
+ * Strings come from wp_localize_script( 'oliprfe-admin', 'oliprfeAdmin', { i18n, ajaxUrl, nonce } ).
  */
 ( function () {
 	'use strict';
 
-	var cfg  = window.oliPfAdmin || {};
+	var cfg  = window.oliprfeAdmin || {};
 	var i18n = Object.assign( {
 		copy: 'Copy',
 		copied: 'Copied',

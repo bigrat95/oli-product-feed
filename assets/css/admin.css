@@ -99,3 +99,8 @@
 .opf-wrap .opf-match { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 12px 0 0; }
 .opf-wrap .opf-match-text { color: #50575e; }
 .opf-wrap .opf-help .inside p:last-child { margin-bottom: 0; }
+
+/* Support footer on the plugin screens. */
+.oliprfe-support-footer {
+	margin-top: 20px;
+}

@@ -1,5 +1,23 @@
 # Changelog
 
+## Unreleased
+
+- Removed the optional must-use loader (`mu-plugin/oli-product-feed-early.php`) from the repository and its readme instruction. It was never shipped in the WordPress.org ZIP and no plugin code loads it.
+
+## 0.3.9 (2026-10-14)
+
+WordPress.org plugin review follow-up (Review ID P0TDX382228HGN).
+
+- Removed the optional must-use loader (`mu-plugin/`): no file outside the plugin is loaded.
+- Support footer: inline `style` attribute replaced by the `oliprfe-support-footer` class in `assets/css/admin.css`.
+- Admin asset handles renamed `oli-pf-admin` -> `oliprfe-admin`, script object `oliPfAdmin` -> `oliprfeAdmin`.
+
+## 0.3.8 (2026-10-14)
+
+WordPress.org plugin review fix (Review ID P0TDX382228HGN).
+
+- Support notice: the dismiss handler is attached to the enqueued `oli-pf-admin` script with `wp_add_inline_script()`; the inline `<script>` tag in `src/Admin/Admin.php` is removed.
+
 ## 0.3.7 (2026-10-12)
 
 Donate / support links (same pattern as Oli Media Cleaner).

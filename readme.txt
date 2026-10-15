@@ -5,7 +5,7 @@ Tags: product feed, google merchant center, tiktok, facebook catalog, woocommerc
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.3.7
+Stable tag: 0.3.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,7 +71,7 @@ Your host or CDN probably caches static files for a long time. In **Settings**, 
 
 = How do I make the WordPress serving faster? =
 
-The feed is sent while the plugins load, before WooCommerce. To send it even earlier, copy `mu-plugin/oli-product-feed-early.php` from the plugin folder to `wp-content/mu-plugins/`. It expects the standard plugin folder name `oli-product-feed` (the WordPress.org slug). It does nothing when the plugin is inactive or serves static files.
+The feed is sent while the plugins load, before WooCommerce, from the pre-generated file.
 
 = Who can manage the feeds? =
 
@@ -92,6 +92,14 @@ The scheduled tasks and their Action Scheduler history are always removed. When 
 3. Settings.
 
 == Changelog ==
+
+= 0.3.9 =
+* WordPress.org review: the optional must-use loader is removed (no file outside the plugin is loaded).
+* No inline style attribute in the admin footer (moved to the enqueued stylesheet).
+* Admin script and style handles use the plugin prefix (oliprfe-admin).
+
+= 0.3.8 =
+* The support notice dismiss handler is now attached to the enqueued admin script with `wp_add_inline_script()` (no inline `<script>` tag).
 
 = 0.3.7 =
 * NEW: Feeds and Donate links on the Plugins screen, optional support notice on plugin screens, footer donation link, and Donate link on the WordPress.org plugin page (PayPal)
@@ -150,6 +158,12 @@ The scheduled tasks and their Action Scheduler history are always removed. When 
 * First version: Google Merchant Center feeds, TranslatePress, Price Based on Country, batches, WP-CLI.
 
 == Upgrade Notice ==
+
+= 0.3.9 =
+WordPress.org review fixes: no must-use loader, no inline styles, prefixed asset handles.
+
+= 0.3.8 =
+WordPress.org review fix: admin JavaScript is only loaded through the WordPress enqueue functions.
 
 = 0.3.7 =
 Adds Donate / support links (Plugins screen, plugin notice, WordPress.org Donate link).

@@ -145,21 +145,6 @@ final class Admin {
 				?>
 			</p>
 		</div>
-		<script>
-		(function () {
-			var notice = document.querySelector('.oliprfe-donate-notice');
-			if (!notice || typeof oliPfAdmin === 'undefined') return;
-			notice.addEventListener('click', function (e) {
-				if (!e.target.classList.contains('notice-dismiss')) return;
-				var body = new FormData();
-				body.append('action', 'oliprfe_dismiss_donate');
-				body.append('nonce', oliPfAdmin.donateNonce || '');
-				if (window.fetch) {
-					fetch(oliPfAdmin.ajaxUrl, { method: 'POST', body: body, credentials: 'same-origin' });
-				}
-			});
-		})();
-		</script>
 		<?php
 	}
 
@@ -179,7 +164,7 @@ final class Admin {
 	 * Footer donation line used on plugin screens.
 	 */
 	public static function support_footer() {
-		echo '<p class="description" style="margin-top:20px;">';
+		echo '<p class="description oliprfe-support-footer">';
 		echo wp_kses(
 			sprintf(
 				/* translators: %s: donate URL */
@@ -223,11 +208,11 @@ final class Admin {
 		if ( false === strpos( (string) $hook, self::SLUG ) ) {
 			return;
 		}
-		wp_enqueue_style( 'oli-pf-admin', OLIPRFE_URL . 'assets/css/admin.css', array(), OLIPRFE_VERSION );
-		wp_enqueue_script( 'oli-pf-admin', OLIPRFE_URL . 'assets/js/admin.js', array( 'wp-a11y' ), OLIPRFE_VERSION, true );
+		wp_enqueue_style( 'oliprfe-admin', OLIPRFE_URL . 'assets/css/admin.css', array(), OLIPRFE_VERSION );
+		wp_enqueue_script( 'oliprfe-admin', OLIPRFE_URL . 'assets/js/admin.js', array( 'wp-a11y' ), OLIPRFE_VERSION, true );
 		wp_localize_script(
-			'oli-pf-admin',
-			'oliPfAdmin',
+			'oliprfe-admin',
+			'oliprfeAdmin',
 			array(
 				'ajaxUrl'     => admin_url( 'admin-ajax.php' ),
 				'nonce'       => wp_create_nonce( 'oliprfe_feed_status' ),
@@ -246,6 +231,28 @@ final class Admin {
 				),
 			)
 		);
+		wp_add_inline_script( 'oliprfe-admin', self::donate_dismiss_js() );
+	}
+
+	/**
+	 * Dismiss handler for the support notice (attached to the enqueued admin script).
+	 *
+	 * @return string
+	 */
+	private static function donate_dismiss_js() {
+		return "(function () {\n"
+			. "\tvar notice = document.querySelector('.oliprfe-donate-notice');\n"
+			. "\tif (!notice || typeof oliprfeAdmin === 'undefined') return;\n"
+			. "\tnotice.addEventListener('click', function (e) {\n"
+			. "\t\tif (!e.target.classList.contains('notice-dismiss')) return;\n"
+			. "\t\tvar body = new FormData();\n"
+			. "\t\tbody.append('action', 'oliprfe_dismiss_donate');\n"
+			. "\t\tbody.append('nonce', oliprfeAdmin.donateNonce || '');\n"
+			. "\t\tif (window.fetch) {\n"
+			. "\t\t\tfetch(oliprfeAdmin.ajaxUrl, { method: 'POST', body: body, credentials: 'same-origin' });\n"
+			. "\t\t}\n"
+			. "\t});\n"
+			. "})();";
 	}
 
 	/**
