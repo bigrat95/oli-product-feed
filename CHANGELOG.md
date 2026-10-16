@@ -6,6 +6,8 @@
 
 ## 0.3.9 (2026-10-14)
 
+Published on WordPress.org 2026-10-16 (SVN r3750329): https://wordpress.org/plugins/oli-product-feed/
+
 WordPress.org plugin review follow-up (Review ID P0TDX382228HGN).
 
 - Removed the optional must-use loader (`mu-plugin/`): no file outside the plugin is loaded.
