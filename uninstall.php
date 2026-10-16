@@ -123,7 +123,7 @@ defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 		}
 
 		// Per-product backorder override (simple products and variations).
-		$wpdb->delete( $wpdb->postmeta, array( 'meta_key' => '_oliprfe_availability' ), array( '%s' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time cleanup of the plugin's product meta.
+		$wpdb->delete( $wpdb->postmeta, array( 'meta_key' => '_oliprfe_availability' ), array( '%s' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- One-time cleanup of the plugin's product meta.
 
 		// Options (settings and generation states) and transients (locks).
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time cleanup by prefix.
