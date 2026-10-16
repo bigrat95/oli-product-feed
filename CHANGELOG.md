@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1 (2026-10-16)
+
+- Fix: with TranslatePress, a `fr_CA` feed wrote `http://site/fr/fr/produit/slug/` (404) for every item link and the channel `<link>`. After `trp_switch_language()`, `get_permalink()` and `home_url()` already include `/fr/`; `Lang::url()` ran the converter again (second `/fr/`, `https` dropped) and `prefix_url()` compared against the already-prefixed `home_url()`. URL translation is now idempotent (existing language slug is not doubled), the base URL is taken in the default language then converted once, and `force_https` runs after conversion.
+
 ## 0.4.0 (2026-10-16)
 
 - Backorder availability date: per-feed toggle and lead time in days (default 21) for products with stock status `onbackorder` or `outofstock` (when the feed includes them). Google, Microsoft (Bing) and Meta receive `g:availability` = `backorder` (or `preorder` if configured), `g:availability_date` in ISO 8601 with the site time zone (recalculated at each generation), and optional `min_handling_time` / `max_handling_time`. In-stock items are unchanged. Other channels are not affected.

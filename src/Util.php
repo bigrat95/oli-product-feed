@@ -148,7 +148,13 @@ final class Util {
 	public static function maybe_https( $url ) {
 		static $home_host = null;
 		if ( null === $home_host ) {
-			$home_host = 'https' === wp_parse_url( home_url(), PHP_URL_SCHEME ) ? wp_parse_url( home_url(), PHP_URL_HOST ) : '';
+			// The unfiltered home option: after trp_switch_language(), home_url() is
+			// http://site/fr/ even when the site itself is https://site.
+			$raw = get_option( 'home' );
+			if ( ! is_string( $raw ) || '' === $raw ) {
+				$raw = home_url();
+			}
+			$home_host = 'https' === wp_parse_url( $raw, PHP_URL_SCHEME ) ? wp_parse_url( $raw, PHP_URL_HOST ) : '';
 		}
 		if ( '' !== $home_host && 0 === strpos( $url, 'http://' ) && wp_parse_url( $url, PHP_URL_HOST ) === $home_host ) {
 			$url = 'https://' . substr( $url, 7 );

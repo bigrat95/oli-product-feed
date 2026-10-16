@@ -805,11 +805,7 @@ final class ItemBuilder {
 	 * @return string
 	 */
 	private function link( $product ) {
-		$url = $product->get_permalink();
-		if ( ! empty( $this->feed['force_https'] ) ) {
-			$url = Util::maybe_https( $url );
-		}
-		$url  = Lang::url( $url, $this->feed['language'] );
+		$url  = Lang::feed_url( $product->get_permalink(), $this->feed['language'], ! empty( $this->feed['force_https'] ) );
 		$args = array_merge( $this->feed['link_args'], $this->feed['utm'] );
 
 		/**

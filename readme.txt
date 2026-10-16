@@ -5,7 +5,7 @@ Tags: product feed, google merchant center, tiktok, facebook catalog, woocommerc
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.4.0
+Stable tag: 0.4.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,9 @@ The scheduled tasks and their Action Scheduler history are always removed. When 
 3. Settings.
 
 == Changelog ==
+
+= 0.4.1 =
+* Fix: TranslatePress fr_CA feeds no longer write doubled language slugs (`/fr/fr/…`, a 404) or `http://` on item links and the channel `<link>`. URLs that already have `/fr/` are left as-is; default-language URLs are converted once; `force_https` is applied after conversion.
 
 = 0.4.0 =
 * NEW: Automatic availability date for products sold on backorder or while out of stock (lead time in days, default 21). Google, Microsoft (Bing) and Meta; optional handling time; per-product override on the product edit screen and on variations.

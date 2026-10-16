@@ -179,10 +179,9 @@ final class Generator {
 	 * @return array<string,mixed>
 	 */
 	public static function context( array $feed ) {
-		$home                     = home_url( '/' );
-		$home                     = ! empty( $feed['force_https'] ) ? Util::maybe_https( $home ) : $home;
+		$home                     = Lang::default_home_url();
 		$feed['site_title']       = html_entity_decode( get_bloginfo( 'name' ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
-		$feed['site_link']        = Lang::url( $home, $feed['language'] );
+		$feed['site_link']        = Lang::feed_url( $home, isset( $feed['language'] ) ? $feed['language'] : '', ! empty( $feed['force_https'] ) );
 		$feed['site_description'] = $feed['name'];
 		return $feed;
 	}
