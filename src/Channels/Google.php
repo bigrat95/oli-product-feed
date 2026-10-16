@@ -49,6 +49,8 @@ class Google extends Channel {
 			'additional_image_link'     => array( 'label' => __( 'Additional image links', 'oli-product-feed' ), 'level' => self::OPTIONAL ),
 			'availability'              => array( 'label' => __( 'Availability', 'oli-product-feed' ), 'level' => self::REQUIRED ),
 			'availability_date'         => array( 'label' => __( 'Availability date', 'oli-product-feed' ), 'level' => self::OPTIONAL ),
+			'min_handling_time'         => array( 'label' => __( 'Min handling time (days)', 'oli-product-feed' ), 'level' => self::OPTIONAL ),
+			'max_handling_time'         => array( 'label' => __( 'Max handling time (days)', 'oli-product-feed' ), 'level' => self::OPTIONAL ),
 			'price'                     => array( 'label' => __( 'Price', 'oli-product-feed' ), 'level' => self::REQUIRED ),
 			'sale_price'                => array( 'label' => __( 'Sale price', 'oli-product-feed' ), 'level' => self::OPTIONAL ),
 			'sale_price_effective_date' => array( 'label' => __( 'Sale price effective date', 'oli-product-feed' ), 'level' => self::OPTIONAL ),

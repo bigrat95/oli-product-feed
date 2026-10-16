@@ -81,6 +81,11 @@ final class Feeds {
 				'price_max'          => '',
 			),
 			'availability_rules'      => array(),
+			'backorder_lead_enabled'  => false,
+			'backorder_lead_days'     => 21,
+			'backorder_as_preorder'   => false,
+			'backorder_min_handling_time' => '',
+			'backorder_max_handling_time' => '',
 			'exclude_rules'           => array(),
 			'title_brand_prefix'      => false,
 			'title_template'          => '',
@@ -388,6 +393,18 @@ final class Feeds {
 					'availability' => $availability,
 				);
 			}
+		}
+
+		$out['backorder_lead_enabled'] = ! empty( $in['backorder_lead_enabled'] );
+		$days                          = isset( $in['backorder_lead_days'] ) ? (int) $in['backorder_lead_days'] : $d['backorder_lead_days'];
+		$out['backorder_lead_days']    = max( 1, min( 3650, $days ) );
+		$out['backorder_as_preorder']  = ! empty( $in['backorder_as_preorder'] );
+		$min                           = isset( $in['backorder_min_handling_time'] ) ? trim( (string) $in['backorder_min_handling_time'] ) : '';
+		$max                           = isset( $in['backorder_max_handling_time'] ) ? trim( (string) $in['backorder_max_handling_time'] ) : '';
+		$out['backorder_min_handling_time'] = ( '' !== $min && is_numeric( $min ) ) ? (string) max( 0, min( 365, (int) $min ) ) : '';
+		$out['backorder_max_handling_time'] = ( '' !== $max && is_numeric( $max ) ) ? (string) max( 0, min( 365, (int) $max ) ) : '';
+		if ( '' !== $out['backorder_min_handling_time'] && '' !== $out['backorder_max_handling_time'] && (int) $out['backorder_max_handling_time'] < (int) $out['backorder_min_handling_time'] ) {
+			$out['backorder_max_handling_time'] = $out['backorder_min_handling_time'];
 		}
 
 		$out['exclude_rules'] = array();

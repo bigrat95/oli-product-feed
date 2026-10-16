@@ -5,7 +5,7 @@ Tags: product feed, google merchant center, tiktok, facebook catalog, woocommerc
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.3.9
+Stable tag: 0.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,13 +28,14 @@ Product feeds for WooCommerce: Google Merchant Center, Pinterest, Meta, TikTok a
 = Feeds =
 
 * **Simple and variable products**: one item per variation, grouped with `item_group_id`
-* **Language and currency per feed**: with **TranslatePress**, titles, descriptions, terms and links are taken in the feed language; with **Price Based on Country**, prices come from a pricing zone and links can carry the country parameter
+* **Language and currency per feed**: with **TranslatePress**, titles, descriptions, terms and links are taken in the feed language (the locale is set for the whole generation, including translated permalinks such as `/fr/`); with **Price Based on Country**, prices come from a pricing zone and links can carry the country parameter
 * **Attribute mapping**: for every attribute, use the automatic rule or pick a product field, a product attribute, a taxonomy, a custom field (meta), a static value or a copy of another final attribute, with prefix, suffix, fallback and value map; a preview column shows the value for a sample product
 * **Variant color and size** sent by default from the `pa_color` (or `pa_colour`, Color, Colour) and `pa_size` (or Size) attributes, in the feed language; an explicit mapping always wins
 * **Per-product values** for the odd product (for example the color of one item)
 * **Title template** such as `{brand} {name} {type} - {variation}`, with the type set per category
 * **GTIN validation** (check digit); **MPN = SKU** for all brands or only for a list of brands
 * **Filters**: categories, tags, price range, stock status, product IDs, words in the title, required fields; exclusion rules and availability rules on custom fields; live count of the matching products
+* **Backorder availability date**: optional per-feed lead time (default 21 days) for products on backorder or sold while out of stock. Google, Microsoft (Bing) and Meta receive `g:availability` = backorder (or preorder if configured), `g:availability_date` in ISO 8601 with the site time zone, and optional handling time. In-stock items are unchanged. A per-product override (days or a fixed date) can be set on the product and on each variation.
 * **Google product category** per category or per product
 * **UTM and extra link parameters**
 * **Clear log**: every generation lists the excluded products and why
@@ -92,6 +93,10 @@ The scheduled tasks and their Action Scheduler history are always removed. When 
 3. Settings.
 
 == Changelog ==
+
+= 0.4.0 =
+* NEW: Automatic availability date for products sold on backorder or while out of stock (lead time in days, default 21). Google, Microsoft (Bing) and Meta; optional handling time; per-product override on the product edit screen and on variations.
+* Fix: TranslatePress feed language (e.g. fr_CA) now switches the current language and locale while the feed is generated, so titles, descriptions and /fr/ links are taken from TranslatePress instead of staying in English.
 
 = 0.3.9 =
 * WordPress.org review: the optional must-use loader is removed (no file outside the plugin is loaded).
@@ -158,6 +163,9 @@ The scheduled tasks and their Action Scheduler history are always removed. When 
 * First version: Google Merchant Center feeds, TranslatePress, Price Based on Country, batches, WP-CLI.
 
 == Upgrade Notice ==
+
+= 0.4.0 =
+Backorder availability dates for Google, Bing and Meta, and a TranslatePress language fix so French (Canada) feeds no longer stay in English.
 
 = 0.3.9 =
 WordPress.org review fixes: no must-use loader, no inline styles, prefixed asset handles.

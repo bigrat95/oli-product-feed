@@ -44,7 +44,10 @@ final class Editor {
 			'link'                      => __( 'Product URL in the feed language', 'oli-product-feed' ),
 			'image_link'                => __( 'Main image (variation image first)', 'oli-product-feed' ),
 			'additional_image_link'     => __( 'Gallery images', 'oli-product-feed' ),
-			'availability'              => __( 'Stock status and availability rules', 'oli-product-feed' ),
+			'availability'              => __( 'Stock status and availability rules (backorder date when the lead time option is on)', 'oli-product-feed' ),
+			'availability_date'         => __( 'Now plus the backorder lead time, in the site time zone', 'oli-product-feed' ),
+			'min_handling_time'         => __( 'Feed handling time for backorder items', 'oli-product-feed' ),
+			'max_handling_time'         => __( 'Feed handling time for backorder items', 'oli-product-feed' ),
 			'price'                     => __( 'Regular price and currency (price source)', 'oli-product-feed' ),
 			'sale_price'                => __( 'Sale price when lower than the regular price', 'oli-product-feed' ),
 			'sale_price_effective_date' => __( 'Sale dates, when set', 'oli-product-feed' ),
@@ -256,10 +259,12 @@ final class Editor {
 	 * @param string $label Label (already plain text).
 	 * @param string $for   Input ID ('' = fieldset).
 	 * @param string $html  Control HTML (already escaped).
-	 * @param string $desc  Description.
+	 * @param string $desc     Description.
+	 * @param string $tr_class Optional class on the row.
+	 * @param bool   $hidden   Hidden attribute.
 	 */
-	private static function row( $label, $for, $html, $desc = '' ) {
-		echo '<tr><th scope="row">';
+	private static function row( $label, $for, $html, $desc = '', $tr_class = '', $hidden = false ) {
+		echo '<tr' . ( '' !== $tr_class ? ' class="' . esc_attr( $tr_class ) . '"' : '' ) . ( $hidden ? ' hidden' : '' ) . '><th scope="row">';
 		if ( '' !== $for ) {
 			echo '<label for="' . esc_attr( $for ) . '">' . esc_html( $label ) . '</label>';
 		} else {
@@ -502,7 +507,7 @@ final class Editor {
 
 		$languages = Lang::languages();
 		if ( $languages ) {
-			self::row( __( 'Language', 'oli-product-feed' ), 'opf-language', self::select( 'feed[language]', 'opf-language', $languages, $feed['language'] ? $feed['language'] : Lang::default_language() ), __( 'Titles, descriptions, categories and product URLs are exported in this language (TranslatePress).', 'oli-product-feed' ) );
+			self::row( __( 'Language', 'oli-product-feed' ), 'opf-language', self::select( 'feed[language]', 'opf-language', $languages, $feed['language'] ? $feed['language'] : Lang::default_language() ), __( 'Titles, descriptions, categories and product URLs are exported in this language (TranslatePress). The feed language is applied for the whole generation (locale and translated permalinks).', 'oli-product-feed' ) );
 		} else {
 			echo '<input type="hidden" name="feed[language]" value="">';
 		}
@@ -625,6 +630,30 @@ final class Editor {
 		self::row( __( 'Exclude when empty', 'oli-product-feed' ), 'opf-require_fields', self::text( 'feed[filters][require_fields]', 'opf-require_fields', implode( ', ', $f['require_fields'] ), 'regular-text code' ), __( 'Feed attributes, separated by commas (for example gtin, brand). Products with an empty value are excluded.', 'oli-product-feed' ) );
 		self::row( __( 'Exclusion rules', 'oli-product-feed' ), '', self::rule_rows( 'feed[exclude_rules]', $feed['exclude_rules'], false ), __( 'Exclude a product when its meta (or its parent\'s) has this value.', 'oli-product-feed' ) );
 		self::row( __( 'Availability rules', 'oli-product-feed' ), '', self::rule_rows( 'feed[availability_rules]', $feed['availability_rules'], true ), __( 'Force an availability when a meta (or the parent\'s) has this value. The first matching rule wins.', 'oli-product-feed' ) );
+		self::row(
+			__( 'Backorder lead time', 'oli-product-feed' ),
+			'',
+			self::checkbox( 'feed[backorder_lead_enabled]', ! empty( $feed['backorder_lead_enabled'] ), __( 'Set an availability date for products on backorder and for out-of-stock products included in this feed', 'oli-product-feed' ) ),
+			__( 'Google, Microsoft (Bing) and Meta. In-stock items are unchanged. A per-product override (days or a date) can be set on the product edit screen.', 'oli-product-feed' )
+		);
+		$lead  = '<input type="number" min="1" max="3650" class="small-text" id="opf-backorder_lead_days" name="feed[backorder_lead_days]" value="' . esc_attr( (string) ( isset( $feed['backorder_lead_days'] ) ? $feed['backorder_lead_days'] : 21 ) ) . '"> ';
+		$lead .= esc_html__( 'days from the generation date (default 21, about 2–3 weeks)', 'oli-product-feed' );
+		$hide_lead = empty( $feed['backorder_lead_enabled'] );
+		self::row( __( 'Lead time (days)', 'oli-product-feed' ), 'opf-backorder_lead_days', $lead, __( 'Written as g:availability_date in ISO 8601 with the site time zone, recalculated at each generation.', 'oli-product-feed' ), 'opf-for-backorder', $hide_lead );
+		self::row(
+			__( 'Send as preorder', 'oli-product-feed' ),
+			'',
+			self::checkbox( 'feed[backorder_as_preorder]', ! empty( $feed['backorder_as_preorder'] ), __( 'Use preorder instead of backorder (Google spec). Microsoft already maps backorders to preorder.', 'oli-product-feed' ) ),
+			'',
+			'opf-for-backorder',
+			$hide_lead
+		);
+		$handling  = '<label for="opf-backorder_min_handling_time">' . esc_html__( 'Min', 'oli-product-feed' ) . '</label> ';
+		$handling .= '<input type="number" min="0" max="365" class="small-text" id="opf-backorder_min_handling_time" name="feed[backorder_min_handling_time]" value="' . esc_attr( (string) ( isset( $feed['backorder_min_handling_time'] ) ? $feed['backorder_min_handling_time'] : '' ) ) . '"> ';
+		$handling .= '<label for="opf-backorder_max_handling_time">' . esc_html__( 'Max', 'oli-product-feed' ) . '</label> ';
+		$handling .= '<input type="number" min="0" max="365" class="small-text" id="opf-backorder_max_handling_time" name="feed[backorder_max_handling_time]" value="' . esc_attr( (string) ( isset( $feed['backorder_max_handling_time'] ) ? $feed['backorder_max_handling_time'] : '' ) ) . '"> ';
+		$handling .= esc_html__( 'days', 'oli-product-feed' );
+		self::row( __( 'Handling time (backorders)', 'oli-product-feed' ), 'opf-backorder_min_handling_time', $handling, __( 'Optional g:min_handling_time and g:max_handling_time for these items (Google and Microsoft). Empty: not sent.', 'oli-product-feed' ), 'opf-for-backorder', $hide_lead );
 		echo '</tbody></table>';
 		echo '<p class="opf-match"><span class="opf-match-text" aria-live="polite">' . esc_html__( 'Count the products that match the category, tag, stock and ID filters (before the other rules).', 'oli-product-feed' ) . '</span> <button type="button" class="button opf-match-refresh">' . esc_html__( 'Refresh count', 'oli-product-feed' ) . '</button></p>';
 		self::close_box();
@@ -1115,6 +1144,11 @@ final class Editor {
 			),
 			'exclude_rules'           => $rules( $get( 'exclude_rules', array() ), false ),
 			'availability_rules'      => $rules( $get( 'availability_rules', array() ), true ),
+			'backorder_lead_enabled'  => ! empty( $post['backorder_lead_enabled'] ),
+			'backorder_lead_days'     => (int) $get( 'backorder_lead_days', 21 ),
+			'backorder_as_preorder'   => ! empty( $post['backorder_as_preorder'] ),
+			'backorder_min_handling_time' => (string) $get( 'backorder_min_handling_time' ),
+			'backorder_max_handling_time' => (string) $get( 'backorder_max_handling_time' ),
 			'title_template'          => (string) $get( 'title_template' ),
 			'title_brand_prefix'      => ! empty( $post['title_brand_prefix'] ),
 			'title_type_map'          => is_array( $get( 'title_type_map', array() ) ) ? $get( 'title_type_map', array() ) : array(),

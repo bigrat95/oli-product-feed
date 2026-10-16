@@ -122,6 +122,9 @@ defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 			$wpdb->delete( $oliprfe_log_table, array( 'source' => 'oli-product-feed' ), array( '%s' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time cleanup of the plugin's log rows.
 		}
 
+		// Per-product backorder override (simple products and variations).
+		$wpdb->delete( $wpdb->postmeta, array( 'meta_key' => '_oliprfe_availability' ), array( '%s' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time cleanup of the plugin's product meta.
+
 		// Options (settings and generation states) and transients (locks).
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time cleanup by prefix.
 		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s OR option_name LIKE %s", $wpdb->esc_like( 'oliprfe_' ) . '%', $wpdb->esc_like( '_transient_oliprfe_' ) . '%', $wpdb->esc_like( '_transient_timeout_oliprfe_' ) . '%' ) );

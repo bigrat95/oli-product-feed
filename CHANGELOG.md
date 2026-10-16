@@ -1,8 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.4.0 (2026-10-16)
 
-- Removed the optional must-use loader (`mu-plugin/oli-product-feed-early.php`) from the repository and its readme instruction. It was never shipped in the WordPress.org ZIP and no plugin code loads it.
+- Backorder availability date: per-feed toggle and lead time in days (default 21) for products with stock status `onbackorder` or `outofstock` (when the feed includes them). Google, Microsoft (Bing) and Meta receive `g:availability` = `backorder` (or `preorder` if configured), `g:availability_date` in ISO 8601 with the site time zone (recalculated at each generation), and optional `min_handling_time` / `max_handling_time`. In-stock items are unchanged. Other channels are not affected.
+- Optional per-product override meta (`_oliprfe_availability`: a number of days or a `YYYY-MM-DD` date) on the product Inventory tab and on each variation.
+- Fix: TranslatePress language (e.g. `fr_CA`) was not applied during generation (cron, Action Scheduler, WP-CLI, admin). The plugin now calls `trp_switch_language()`, sets the WordPress locale, uses translated permalinks / `get_url_for_language()`, and falls back to the dictionary and the `/fr/` URL slug so titles, descriptions and links match the feed language.
 
 ## 0.3.9 (2026-10-14)
 

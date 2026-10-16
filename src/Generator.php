@@ -60,14 +60,19 @@ final class Generator {
 		OutputDirs::add_file( $folder, $name );
 		set_transient( self::LOCK_PREFIX . $feed_id, time(), self::LOCK_TTL );
 
-		$feed = self::context( $feed );
-		$path = Storage::output_path( $feed_id );
-		$tmp  = $path . '.tmp';
-		$ids  = Query::ids( $feed );
+		Lang::switch_language( $feed['language'] );
+		try {
+			$feed = self::context( $feed );
+			$path = Storage::output_path( $feed_id );
+			$tmp  = $path . '.tmp';
+			$ids  = Query::ids( $feed );
 
-		if ( false === self::write( $tmp, $channel->header( $feed, $feed['format'] ), false ) ) {
-			delete_transient( self::LOCK_PREFIX . $feed_id );
-			return new \WP_Error( 'oliprfe_write', __( 'The feed file cannot be written.', 'oli-product-feed' ) );
+			if ( false === self::write( $tmp, $channel->header( $feed, $feed['format'] ), false ) ) {
+				delete_transient( self::LOCK_PREFIX . $feed_id );
+				return new \WP_Error( 'oliprfe_write', __( 'The feed file cannot be written.', 'oli-product-feed' ) );
+			}
+		} finally {
+			Lang::restore_language();
 		}
 		$state = array(
 			'ids'      => $ids,
@@ -98,50 +103,55 @@ final class Generator {
 			return new \WP_Error( 'oliprfe_no_state', __( 'No generation in progress.', 'oli-product-feed' ) );
 		}
 		set_transient( self::LOCK_PREFIX . $feed_id, time(), self::LOCK_TTL );
-		$feed    = self::context( $feed );
-		$channel = Channels\Registry::get( $feed['channel'] );
-		$builder = new ItemBuilder( $feed, $channel );
-		$slice   = array_slice( $state['ids'], $state['offset'], $feed['batch_size'] );
-		$buffer  = '';
+		Lang::switch_language( $feed['language'] );
+		try {
+			$feed    = self::context( $feed );
+			$channel = Channels\Registry::get( $feed['channel'] );
+			$builder = new ItemBuilder( $feed, $channel );
+			$slice   = array_slice( $state['ids'], $state['offset'], $feed['batch_size'] );
+			$buffer  = '';
 
-		foreach ( $slice as $id ) {
-			$result = $builder->build( $id );
-			foreach ( $result['warnings'] as $warning ) {
-				$code = strtok( $warning, ':' );
-				if ( ! isset( $state['warnings'][ $code ] ) ) {
-					$state['warnings'][ $code ] = array();
+			foreach ( $slice as $id ) {
+				$result = $builder->build( $id );
+				foreach ( $result['warnings'] as $warning ) {
+					$code = strtok( $warning, ':' );
+					if ( ! isset( $state['warnings'][ $code ] ) ) {
+						$state['warnings'][ $code ] = array();
+					}
+					if ( count( $state['warnings'][ $code ] ) < 50 ) {
+						$state['warnings'][ $code ][] = $id;
+					}
 				}
-				if ( count( $state['warnings'][ $code ] ) < 50 ) {
-					$state['warnings'][ $code ][] = $id;
+				if ( null === $result['row'] ) {
+					$reason = $result['reason'];
+					if ( ! isset( $state['excluded'][ $reason ] ) ) {
+						$state['excluded'][ $reason ] = array();
+					}
+					$state['excluded'][ $reason ][] = $id;
+					continue;
 				}
+				$buffer .= $channel->item( $result['row'], $feed, $feed['format'] );
+				++$state['items'];
 			}
-			if ( null === $result['row'] ) {
-				$reason = $result['reason'];
-				if ( ! isset( $state['excluded'][ $reason ] ) ) {
-					$state['excluded'][ $reason ] = array();
-				}
-				$state['excluded'][ $reason ][] = $id;
-				continue;
+
+			if ( '' !== $buffer && false === self::write( $state['tmp'], $buffer, true ) ) {
+				self::fail( $feed_id, $state, __( 'The feed file cannot be written.', 'oli-product-feed' ) );
+				return new \WP_Error( 'oliprfe_write', __( 'The feed file cannot be written.', 'oli-product-feed' ) );
 			}
-			$buffer .= $channel->item( $result['row'], $feed, $feed['format'] );
-			++$state['items'];
-		}
+			$state['offset'] += count( $slice );
 
-		if ( '' !== $buffer && false === self::write( $state['tmp'], $buffer, true ) ) {
-			self::fail( $feed_id, $state, __( 'The feed file cannot be written.', 'oli-product-feed' ) );
-			return new \WP_Error( 'oliprfe_write', __( 'The feed file cannot be written.', 'oli-product-feed' ) );
-		}
-		$state['offset'] += count( $slice );
+			if ( defined( 'WP_CLI' ) && WP_CLI && function_exists( 'wp_cache_flush_runtime' ) ) {
+				wp_cache_flush_runtime();
+			}
 
-		if ( defined( 'WP_CLI' ) && WP_CLI && function_exists( 'wp_cache_flush_runtime' ) ) {
-			wp_cache_flush_runtime();
+			if ( $state['offset'] < count( $state['ids'] ) ) {
+				update_option( self::STATE_PREFIX . $feed_id, $state, false );
+				return 'more';
+			}
+			return self::finish( $feed_id, $feed, $channel, $state );
+		} finally {
+			Lang::restore_language();
 		}
-
-		if ( $state['offset'] < count( $state['ids'] ) ) {
-			update_option( self::STATE_PREFIX . $feed_id, $state, false );
-			return 'more';
-		}
-		return self::finish( $feed_id, $feed, $channel, $state );
 	}
 
 	/**
@@ -189,18 +199,23 @@ final class Generator {
 		if ( ! $channel ) {
 			return null;
 		}
-		$feed    = self::context( $feed );
-		$builder = new ItemBuilder( $feed, $channel );
-		foreach ( array_slice( Query::ids( $feed ), 0, $max ) as $id ) {
-			$result = $builder->build( $id );
-			if ( null !== $result['row'] ) {
-				return array(
-					'id'  => (int) $id,
-					'row' => $result['row'],
-				);
+		Lang::switch_language( isset( $feed['language'] ) ? $feed['language'] : '' );
+		try {
+			$feed    = self::context( $feed );
+			$builder = new ItemBuilder( $feed, $channel );
+			foreach ( array_slice( Query::ids( $feed ), 0, $max ) as $id ) {
+				$result = $builder->build( $id );
+				if ( null !== $result['row'] ) {
+					return array(
+						'id'  => (int) $id,
+						'row' => $result['row'],
+					);
+				}
 			}
+			return null;
+		} finally {
+			Lang::restore_language();
 		}
-		return null;
 	}
 
 	/**

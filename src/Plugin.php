@@ -35,6 +35,7 @@ final class Plugin {
 
 		if ( is_admin() ) {
 			Admin\Admin::init();
+			Admin\Product::init();
 		}
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {

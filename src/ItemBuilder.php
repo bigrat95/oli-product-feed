@@ -170,6 +170,7 @@ final class ItemBuilder {
 		$item['additional_image_link'] = $images['additional'];
 
 		$item['availability'] = $this->availability( $stock_status, $product, $parent );
+		$this->apply_availability_extras( $item, $product, $parent );
 		$item['price']        = $prices['regular'];
 		$item['sale_price']   = $prices['sale'];
 		$item['sale_from']    = $prices['sale_from'];
@@ -918,6 +919,10 @@ final class ItemBuilder {
 			'outofstock'  => 'out_of_stock',
 		);
 		$availability = isset( $map[ $stock_status ] ) ? $map[ $stock_status ] : 'out_of_stock';
+		$override     = Availability::override( $product, $parent );
+		if ( ( ! empty( $this->feed['backorder_lead_enabled'] ) || '' !== $override ) && in_array( $stock_status, array( 'onbackorder', 'outofstock' ), true ) ) {
+			$availability = ! empty( $this->feed['backorder_as_preorder'] ) ? 'preorder' : 'backorder';
+		}
 		foreach ( $this->feed['availability_rules'] as $rule ) {
 			if ( $this->meta_matches( $product, $parent, $rule['meta'], $rule['value'] ) ) {
 				$availability = $rule['availability'];
@@ -934,6 +939,66 @@ final class ItemBuilder {
 		 */
 		$availability = (string) apply_filters( 'oliprfe_availability', $availability, $product, $this->feed );
 		return in_array( $availability, array( 'in_stock', 'out_of_stock', 'backorder', 'preorder' ), true ) ? $availability : 'out_of_stock';
+	}
+
+	/**
+	 * g:availability_date and optional handling times for backorder / preorder items
+	 * (Google, Microsoft, Meta — only when the channel has the field).
+	 *
+	 * @param array<string,mixed> $item    Item (by reference).
+	 * @param \WC_Product         $product Product or variation.
+	 * @param \WC_Product|null    $parent  Parent.
+	 */
+	private function apply_availability_extras( array &$item, $product, $parent ) {
+		$override = Availability::override( $product, $parent );
+		if ( ! Availability::wants_date( $this->feed, $override, $item['availability'] ) ) {
+			return;
+		}
+		$fields = $this->channel->fields();
+		if ( isset( $fields['availability_date'] ) && empty( $item['availability_date'] ) && ! $this->mapped_none( 'availability_date' ) ) {
+			$source = '' !== $override ? $override : (string) ( isset( $this->feed['backorder_lead_days'] ) ? $this->feed['backorder_lead_days'] : 21 );
+			$date   = Availability::datetime( $source );
+			if ( '' !== $date ) {
+				/**
+				 * Filters the ISO 8601 availability date of a backorder / preorder item.
+				 *
+				 * @param string      $date    Date.
+				 * @param \WC_Product $product Product.
+				 * @param array       $feed    Feed configuration.
+				 */
+				$item['availability_date'] = (string) apply_filters( 'oliprfe_availability_date', $date, $product, $this->feed );
+			}
+		}
+		$min = isset( $this->feed['backorder_min_handling_time'] ) ? (string) $this->feed['backorder_min_handling_time'] : '';
+		$max = isset( $this->feed['backorder_max_handling_time'] ) ? (string) $this->feed['backorder_max_handling_time'] : '';
+		if ( '' === $min && '' === $max ) {
+			return;
+		}
+		if ( '' === $min ) {
+			$min = $max;
+		}
+		if ( '' === $max ) {
+			$max = $min;
+		}
+		if ( (int) $max < (int) $min ) {
+			$max = $min;
+		}
+		if ( isset( $fields['min_handling_time'] ) && empty( $item['min_handling_time'] ) && ! $this->mapped_none( 'min_handling_time' ) ) {
+			$item['min_handling_time'] = $min;
+		}
+		if ( isset( $fields['max_handling_time'] ) && empty( $item['max_handling_time'] ) && ! $this->mapped_none( 'max_handling_time' ) ) {
+			$item['max_handling_time'] = $max;
+		}
+	}
+
+	/**
+	 * Is this field mapped to "Do not send"?
+	 *
+	 * @param string $field Field.
+	 * @return bool
+	 */
+	private function mapped_none( $field ) {
+		return isset( $this->mapping[ $field ] ) && 'none' === $this->mapping[ $field ]['type'];
 	}
 
 	/**

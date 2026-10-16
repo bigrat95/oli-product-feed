@@ -259,6 +259,19 @@
 		}
 	} );
 
+	/* ---- Backorder lead time: extra fields only when the option is on ---- */
+	function syncBackorder() {
+		var on = document.querySelector( 'input[name="feed[backorder_lead_enabled]"]' );
+		document.querySelectorAll( '.opf-for-backorder' ).forEach( function ( row ) {
+			row.hidden = ! on || ! on.checked;
+		} );
+	}
+	document.addEventListener( 'change', function ( event ) {
+		if ( 'feed[backorder_lead_enabled]' === event.target.name ) {
+			syncBackorder();
+		}
+	} );
+
 	/* ---- Number of products matching the filters (unsaved form) ---- */
 	document.addEventListener( 'click', function ( event ) {
 		var button = event.target.closest( '.opf-match-refresh' );
@@ -296,6 +309,7 @@
 		}
 		syncHour();
 		syncChannel();
+		syncBackorder();
 		window.setTimeout( poll, 3000 );
 	} );
 }() );

@@ -45,6 +45,7 @@ class Meta extends Channel {
 			'title'                     => array( 'label' => __( 'Title', 'oli-product-feed' ), 'level' => self::REQUIRED ),
 			'description'               => array( 'label' => __( 'Description', 'oli-product-feed' ), 'level' => self::REQUIRED ),
 			'availability'              => array( 'label' => __( 'Availability', 'oli-product-feed' ), 'level' => self::REQUIRED ),
+			'availability_date'         => array( 'label' => __( 'Availability date', 'oli-product-feed' ), 'level' => self::OPTIONAL ),
 			'condition'                 => array( 'label' => __( 'Condition', 'oli-product-feed' ), 'level' => self::REQUIRED ),
 			'price'                     => array( 'label' => __( 'Price', 'oli-product-feed' ), 'level' => self::REQUIRED ),
 			'link'                      => array( 'label' => __( 'Link', 'oli-product-feed' ), 'level' => self::REQUIRED ),
@@ -130,6 +131,11 @@ class Meta extends Channel {
 	 */
 	public function normalize( array $item, array $feed ) {
 		unset( $item['identifier_exists'] );
-		return parent::normalize( $item, $feed );
+		$row = parent::normalize( $item, $feed );
+		if ( ! empty( $item['availability_date'] ) && isset( $row['availability'] ) && 'in stock' === $row['availability']
+			&& in_array( $item['availability'], array( 'backorder', 'preorder' ), true ) ) {
+			$row['availability'] = 'available for order';
+		}
+		return $row;
 	}
 }
